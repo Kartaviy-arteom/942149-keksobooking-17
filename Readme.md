@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Артём Картавый](https://up.htmlacademy.ru/javascript/17/user/942149).
-* Наставник: Павел Фанасков.
+* Наставник: [Павел Фанасков](https://up.htmlacademy.ru/javascript/17/user/615993).
 
 ---
 
