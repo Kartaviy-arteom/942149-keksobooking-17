@@ -19,7 +19,7 @@
     var elementSizes = {
       x: element.offsetWidth,
       y: element.offsetHeight
-    }
+    };
     return elementSizes;
   };
 
@@ -29,7 +29,6 @@
     similarListElement.appendChild(pin);
     var pinSizes = measureElement(pin);
     similarListElement.removeChild(pin);
-    console.log(pinSizes);
     return pinSizes;
   };
 
@@ -70,7 +69,7 @@
 
   for (var i = 0; i < 8; i++) {
     renderPin(i);
-  };
+  }
 
   similarListElement.appendChild(fragment);
 })();
