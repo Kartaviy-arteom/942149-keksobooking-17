@@ -1,24 +1,43 @@
 'use strict';
 
 (function () {
-  var mapUnfaded = document.querySelector('.map');
-  mapUnfaded.classList.remove('map--faded');
+  var map = document.querySelector('.map');
+  map.classList.remove('map--faded');
+
+  var similarListElement = document.querySelector('.map__pins');
+  var similarPin = document.querySelector('#pin')
+    .content
+    .querySelector('.map__pin');
+
 
   var chooseRandomElement = function (arr) {
-    var randomElement = arr[Math.round(Math.random(1) * (arr.length - 1))];
+    var randomElement = arr[Math.floor(Math.random(1) * arr.length)];
     return randomElement;
   };
 
-  var measureWidthMap = function (classNameMap) {
-    var map = document.querySelector(classNameMap);
-    return map.offsetWidth;
+  var measureElement = function (element) {
+    var elementSizes = {
+      x: element.offsetWidth,
+      y: element.offsetHeight
+    }
+    return elementSizes;
   };
 
-  measureWidthMap('.map__pins');
+  var renderTestPin = function (similarPin, similarListElement) {
+    var pin = similarPin.cloneNode(true);
+    pin.setAttribute('style', 'visibility: hidden;');
+    similarListElement.appendChild(pin);
+    var pinSizes = measureElement(pin);
+    similarListElement.removeChild(pin);
+    console.log(pinSizes);
+    return pinSizes;
+  };
 
-  var createMock = function () {
+  var createMock = function (similarPin, similarListElement) {
     var types = ['palace', 'flat', 'house', 'bungalo'];
     var announcement = [];
+    var pinSizes = renderTestPin(similarPin, similarListElement);
+    var mapX = measureElement(similarListElement).x;
 
     for (var i = 0; i < 8; i++) {
       announcement[i] = {
@@ -29,29 +48,29 @@
           type: chooseRandomElement(types)
         },
         location: {
-          x: Math.round(Math.random() * measureWidthMap('.map__pins')),
-          y: Math.round(Math.random() * 500 + 130)
+          x: Math.floor(Math.random() * ((mapX - pinSizes.x) + pinSizes.x / 2)),
+          y: Math.floor(Math.random() * 500 + 130 + pinSizes.y)
         }
       };
     }
     return announcement;
   };
+  console.log(createMock);
 
-  var renderPin = function () {
-    var mock = createMock();
-    var similarListElement = document.querySelector('.map__pins');
-    var similarPin = document.querySelector('#pin')
-      .content
-      .querySelector('.map__pin');
+  var fragment = document.createDocumentFragment();
+  var renderPin = function (i) {
+    var mock = createMock(similarPin, similarListElement);
+    var pin = similarPin.cloneNode(true);
+    pin.setAttribute('style', 'left: ' + mock[i].location.x + 'px; top: ' + mock[i].location.y + 'px;');
+    pin.querySelector('img').setAttribute('src', mock[i].author.avatar);
+    pin.querySelector('img').setAttribute('alt', mock[i].offer.type);
 
-    for (var i = 0; i < mock.length; i++) {
-      var pin = similarPin.cloneNode(true);
-      pin.setAttribute('style', 'left: ' + mock[i].location.x + 'px; top: ' + mock[i].location.y + 'px;');
-      pin.querySelector('img').setAttribute('src', mock[i].author.avatar);
-      pin.querySelector('img').setAttribute('alt', mock[i].offer.type);
-
-      similarListElement.appendChild(pin);
-    }
+    fragment.appendChild(pin);
   };
-  renderPin();
+
+  for (var i = 0; i < 8; i++) {
+    renderPin(i);
+  };
+
+  similarListElement.appendChild(fragment);
 })();
