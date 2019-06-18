@@ -48,7 +48,7 @@
         },
         location: {
           x: Math.floor(Math.random() * (mapX - pinSizes.x)),
-          y: Math.floor(Math.random() * 500 + 130 + pinSizes.y)
+          y: Math.floor(Math.random() * 500 + 130 - pinSizes.y)
         }
       };
     }
