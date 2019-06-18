@@ -11,7 +11,7 @@
 
 
   var chooseRandomElement = function (arr) {
-    var randomElement = arr[Math.floor(Math.random(1) * arr.length)];
+    var randomElement = arr[Math.floor(Math.random() * arr.length)];
     return randomElement;
   };
 
@@ -23,20 +23,20 @@
     return elementSizes;
   };
 
-  var renderTestPin = function (similarPin, similarListElement) {
-    var pin = similarPin.cloneNode(true);
+  var renderTestPin = function (childElement, parentElement) {
+    var pin = childElement.cloneNode(true);
     pin.setAttribute('style', 'visibility: hidden;');
-    similarListElement.appendChild(pin);
+    parentElement.appendChild(pin);
     var pinSizes = measureElement(pin);
-    similarListElement.removeChild(pin);
+    parentElement.removeChild(pin);
     return pinSizes;
   };
 
-  var createMock = function (similarPin, similarListElement) {
+  var createMock = function (childElement, parentElement) {
     var types = ['palace', 'flat', 'house', 'bungalo'];
     var announcement = [];
-    var pinSizes = renderTestPin(similarPin, similarListElement);
-    var mapX = measureElement(similarListElement).x;
+    var pinSizes = renderTestPin(childElement, parentElement);
+    var mapX = measureElement(parentElement).x;
 
     for (var i = 0; i < 8; i++) {
       announcement[i] = {
@@ -47,29 +47,33 @@
           type: chooseRandomElement(types)
         },
         location: {
-          x: Math.floor(Math.random() * ((mapX - pinSizes.x) + pinSizes.x / 2)),
+          x: Math.floor(Math.random() * (mapX - pinSizes.x)),
           y: Math.floor(Math.random() * 500 + 130 + pinSizes.y)
         }
       };
     }
     return announcement;
   };
-  console.log(createMock);
 
   var fragment = document.createDocumentFragment();
   var renderPin = function (i) {
     var mock = createMock(similarPin, similarListElement);
     var pin = similarPin.cloneNode(true);
+    var pinImage = pin.querySelector('img');
+
     pin.setAttribute('style', 'left: ' + mock[i].location.x + 'px; top: ' + mock[i].location.y + 'px;');
-    pin.querySelector('img').setAttribute('src', mock[i].author.avatar);
-    pin.querySelector('img').setAttribute('alt', mock[i].offer.type);
+    pinImage.setAttribute('src', mock[i].author.avatar);
+    pinImage.setAttribute('alt', mock[i].offer.type);
 
     fragment.appendChild(pin);
   };
 
-  for (var i = 0; i < 8; i++) {
-    renderPin(i);
-  }
+  var insertItems = function (items, renderItem, target) {
+    for (var i = 0; i < 8; i++) {
+      renderPin(i);
+    }
+    target.appendChild(items);
+  };
 
-  similarListElement.appendChild(fragment);
+  insertItems(fragment, renderPin, similarListElement);
 })();
