@@ -35,7 +35,6 @@
   var createMock = function (childElement, parentElement) {
     var types = ['palace', 'flat', 'house', 'bungalo'];
     var announcement = [];
-    var pinSizes = getPinSize(childElement, parentElement);
     var mapX = measureElement(parentElement).x;
 
     for (var i = 0; i < 8; i++) {
@@ -55,10 +54,10 @@
     return announcement;
   };
 
-  var pinSizes = getPinSize(similarPin, similarListElement);
 
 
   var renderPin = function (i, pinOffset, childElement, parentElement) {
+
     var mock = createMock(childElement, parentElement);
     var pin = similarPin.cloneNode(true);
     var pinImage = pin.querySelector('img');
@@ -70,7 +69,8 @@
     return pin;
   };
 
-  var insertItems = function (renderItem, target, pinOffset, childElement, parentElement) {
+  var insertItems = function (renderItem, target, childElement, parentElement) {
+    var pinOffset = getPinSize(childElement, parentElement);
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < 8; i++) {
       fragment.appendChild(renderItem(i, pinOffset, childElement, parentElement));
@@ -78,5 +78,5 @@
     target.appendChild(fragment);
   };
 
-  insertItems(renderPin, similarListElement, pinSizes, similarPin, similarListElement);
+  insertItems(renderPin, similarListElement, similarPin, similarListElement);
 })();
