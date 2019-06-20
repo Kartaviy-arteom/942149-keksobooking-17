@@ -2,7 +2,7 @@
 
 (function () {
   var map = document.querySelector('.map');
-  map.classList.remove('map--faded');
+  //map.classList.remove('map--faded');
 
   var similarListElement = document.querySelector('.map__pins');
   var similarPin = document.querySelector('#pin')
