@@ -54,29 +54,27 @@
     return announcement;
   };
 
+  var mock = createMock(similarPin, similarListElement);
+  var pinSizes = getPinSize(similarPin, similarListElement);
 
-
-  var renderPin = function (i, pinOffset, childElement, parentElement) {
-
-    var mock = createMock(childElement, parentElement);
+  var renderPin = function (pinData) {
     var pin = similarPin.cloneNode(true);
     var pinImage = pin.querySelector('img');
 
-    pin.setAttribute('style', 'left: ' + (mock[i].location.x + pinOffset.x / 2) + 'px; top: ' + (mock[i].location.y - pinOffset.y) + 'px;');
-    pinImage.setAttribute('src', mock[i].author.avatar);
-    pinImage.setAttribute('alt', mock[i].offer.type);
+    pin.setAttribute('style', 'left: ' + (pinData.location.x + pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
+    pinImage.setAttribute('src', pinData.author.avatar);
+    pinImage.setAttribute('alt', pinData.offer.type);
 
     return pin;
   };
 
-  var insertItems = function (renderItem, target, childElement, parentElement) {
-    var pinOffset = getPinSize(childElement, parentElement);
+  var insertItems = function (items, renderItem, target) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < 8; i++) {
-      fragment.appendChild(renderItem(i, pinOffset, childElement, parentElement));
+      fragment.appendChild(renderItem(items[i]));
     }
     target.appendChild(fragment);
   };
 
-  insertItems(renderPin, similarListElement, similarPin, similarListElement);
+  insertItems(mock, renderPin, similarListElement);
 })();
