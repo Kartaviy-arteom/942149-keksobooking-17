@@ -70,7 +70,7 @@
 
   var insertItems = function (items, renderItem, target) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < items.length; i++) {
       fragment.appendChild(renderItem(items[i]));
     }
     target.appendChild(fragment);
