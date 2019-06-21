@@ -88,13 +88,13 @@
   var disableElements = function (arr) {
     for (var i = 0; i < arr.length; i++) {
       arr[i].setAttribute('disabled', 'disabled');
-    };
+    }
   };
 
   var activationElements = function (arr) {
     for (var i = 0; i < arr.length; i++) {
       arr[i].removeAttribute('disabled', 'disabled');
-    };
+    }
   };
 
   disableElements(formInputs);
@@ -105,9 +105,9 @@
   var mainPin = map.querySelector('.map__pin--main');
 
   mainPin.addEventListener('click', function () {
-    ActiveMap();
+    activeMap();
   });
-  var ActiveMap = function () {
+  var activeMap = function () {
     activationElements(formInputs);
     activationElements(formSelects);
     activationElements(mapInputs);
@@ -115,7 +115,7 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-    mainPin.addEventListener('mouseup', function(evt) {  // как то странно работает? изменение происходит при клике
+    mainPin.addEventListener('mouseup', function (evt) { // как то странно работает? изменение происходит при клике
       insertCoordinate(mainActivePinCoordinate);
     });
   };
@@ -126,14 +126,14 @@
   var getСoordinateElement = function (element, elementSizes) {
     var coordinate = {
       left: Math.floor(element.offsetLeft + elementSizes.x / 2),
-      top:  Math.floor(element.offsetTop + elementSizes.y /2)
+      top: Math.floor(element.offsetTop + elementSizes.y / 2)
     };
     return coordinate;
   };
 
   var mainPinCoordinate = getСoordinateElement(mainPin, mainPinSizes);
 
-  var addressField = document.getElementById('address');  //не могу найти элемент при использовании записи form.getElementById('address');
+  var addressField = document.getElementById('address'); // не могу найти элемент при использовании записи form.getElementById('address');
   var insertCoordinate = function (coordinate) {
     addressField.value = coordinate.left + ', ' + coordinate.top;
   };
