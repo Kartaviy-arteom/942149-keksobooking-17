@@ -115,7 +115,7 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-    mainPin.addEventListener('mouseup', function (evt) { // как то странно работает? изменение происходит при клике
+    mainPin.addEventListener('mouseup', function () { // как то странно работает? изменение происходит при клике
       insertCoordinate(mainActivePinCoordinate);
     });
   };
