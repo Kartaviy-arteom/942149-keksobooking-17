@@ -115,15 +115,13 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-    mainPin.addEventListener('mouseup', function () { // как то странно работает? изменение происходит при клике
+    mainPin.addEventListener('mouseup', function () {
       insertCoordinate(mainActivePinCoordinate);
     });
   };
 
-  // опреление начальных координат
-  // измеряем размер начальной метки Mainpinsize
   var mainPinSizes = measureElement(mainPin);
-  var getСoordinateElement = function (element, elementSizes) {
+  var getElementСoordinate = function (element, elementSizes) {
     var coordinate = {
       left: Math.floor(element.offsetLeft + elementSizes.x / 2),
       top: Math.floor(element.offsetTop + elementSizes.y / 2)
@@ -131,16 +129,14 @@
     return coordinate;
   };
 
-  var mainPinCoordinate = getСoordinateElement(mainPin, mainPinSizes);
+  var mainPinCoordinate = getElementСoordinate(mainPin, mainPinSizes);
 
-  var addressField = document.getElementById('address'); // не могу найти элемент при использовании записи form.getElementById('address');
+  var addressField = document.getElementById('address');
   var insertCoordinate = function (coordinate) {
     addressField.value = coordinate.left + ', ' + coordinate.top;
   };
   insertCoordinate(mainPinCoordinate);
 
-  // координаты активного пина
-  // пасивного + смещение по вертикали
   var GAP_PIN_Y = 53;
   var mainActivePinCoordinate = {
     left: mainPinCoordinate.left,
