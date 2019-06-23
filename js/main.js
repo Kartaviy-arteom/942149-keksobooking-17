@@ -84,6 +84,7 @@
   var mapFilters = map.querySelector('.map__filters');
   var mapInputs = mapFilters.querySelectorAll('input');
   var mapSelects = mapFilters.querySelectorAll('select');
+  var descriptionField = [form.querySelector('#description')];
 
   var disableElements = function (arr) {
     for (var i = 0; i < arr.length; i++) {
@@ -101,6 +102,7 @@
   disableElements(formSelects);
   disableElements(mapInputs);
   disableElements(mapSelects);
+  disableElements(descriptionField);
 
   var mainPin = map.querySelector('.map__pin--main');
 
@@ -112,6 +114,7 @@
     activationElements(formSelects);
     activationElements(mapInputs);
     activationElements(mapSelects);
+    activationElements(descriptionField);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
