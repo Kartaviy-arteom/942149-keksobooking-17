@@ -147,7 +147,7 @@
   };
 
   // минимальные цены объявления
-  var houseType = form.querySelector('#type'); // не понятно как осуществить поиск по id внутри nodelist formSelects
+  var houseType = form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
   var priceHouse = form.querySelector('#price');
 
   houseType.addEventListener('change', function () {
