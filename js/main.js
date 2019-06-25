@@ -2,7 +2,6 @@
 
 (function () {
   var map = document.querySelector('.map');
-  map.classList.remove('map--faded');
 
   var similarListElement = document.querySelector('.map__pins');
   var similarPin = document.querySelector('#pin')
@@ -76,5 +75,110 @@
     target.appendChild(fragment);
   };
 
-  insertItems(mock, renderPin, similarListElement);
+
+  // 4-1
+
+  var form = document.querySelector('.ad-form');
+  var formInputs = form.querySelectorAll('input');
+  var formSelects = form.querySelectorAll('select');
+  var mapFilters = map.querySelector('.map__filters');
+  var mapInputs = mapFilters.querySelectorAll('input');
+  var mapSelects = mapFilters.querySelectorAll('select');
+  var descriptionField = [form.querySelector('#description')];
+
+  var disableElements = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].setAttribute('disabled', 'disabled');
+    }
+  };
+
+  var activationElements = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].removeAttribute('disabled', 'disabled');
+    }
+  };
+
+  disableElements(formInputs);
+  disableElements(formSelects);
+  disableElements(mapInputs);
+  disableElements(mapSelects);
+  disableElements(descriptionField);
+
+  var mainPin = map.querySelector('.map__pin--main');
+
+  mainPin.addEventListener('click', function () {
+    activeMap();
+  });
+  var activeMap = function () {
+    activationElements(formInputs);
+    activationElements(formSelects);
+    activationElements(mapInputs);
+    activationElements(mapSelects);
+    activationElements(descriptionField);
+    map.classList.remove('map--faded');
+    form.classList.remove('ad-form--disabled');
+    insertItems(mock, renderPin, similarListElement);
+    mainPin.addEventListener('mouseup', function () {
+      insertCoordinate(mainActivePinCoordinate);
+    });
+  };
+
+  var mainPinSizes = measureElement(mainPin);
+  var getElementСoordinate = function (element, elementSizes) {
+    var coordinate = {
+      left: Math.floor(element.offsetLeft + elementSizes.x / 2),
+      top: Math.floor(element.offsetTop + elementSizes.y / 2)
+    };
+    return coordinate;
+  };
+
+  var mainPinCoordinate = getElementСoordinate(mainPin, mainPinSizes);
+
+  var addressField = document.getElementById('address');
+  var insertCoordinate = function (coordinate) {
+    addressField.value = coordinate.left + ', ' + coordinate.top;
+  };
+  insertCoordinate(mainPinCoordinate);
+
+  var GAP_PIN_Y = 53;
+  var mainActivePinCoordinate = {
+    left: mainPinCoordinate.left,
+    top: mainPinCoordinate.top + GAP_PIN_Y
+  };
+
+  // минимальные цены объявления
+  var houseType = form.querySelector('#type'); // не понятно как осуществить поиск по id внутри nodelist formSelects
+  var priceHouse = form.querySelector('#price');
+
+  houseType.addEventListener('change', function () {
+    var houseTypeIndex = houseType.options.selectedIndex;
+    if (houseType.options[houseTypeIndex].text === 'Бунгало') {
+      priceHouse.setAttribute('min', '0');
+      priceHouse.setAttribute('placeholder', '0');
+    }
+    if (houseType.options[houseTypeIndex].text === 'Квартира') {
+      priceHouse.setAttribute('min', '1000');
+      priceHouse.setAttribute('placeholder', '1000');
+    }
+    if (houseType.options[houseTypeIndex].text === 'Дом') {
+      priceHouse.setAttribute('min', '5000');
+      priceHouse.setAttribute('placeholder', '5000');
+    }
+    if (houseType.options[houseTypeIndex].text === 'Дворец') {
+      priceHouse.setAttribute('min', '10000');
+      priceHouse.setAttribute('placeholder', '10000');
+    }
+  });
+
+  // время заезда и выезда
+  var checkInTime = form.querySelector('#timein');
+  var checkOutTime = form.querySelector('#timeout');
+
+  checkInTime.addEventListener('change', function () {
+    checkOutTime.options.selectedIndex = checkInTime.options.selectedIndex;
+  });
+  checkOutTime.addEventListener('change', function () {
+    checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
+  });
+
 })();
