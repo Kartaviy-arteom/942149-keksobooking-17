@@ -146,8 +146,8 @@
     top: mainPinCoordinate.top + GAP_PIN_Y
   };
 
-  // минимальные цены объявления
-  var houseType = form.querySelector('#type'); // не понятно как осуществить поиск по id внутри nodelist formSelects
+  // валидация формы
+  var houseType = form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
   var priceHouse = form.querySelector('#price');
 
   houseType.addEventListener('change', function () {
@@ -180,5 +180,4 @@
   checkOutTime.addEventListener('change', function () {
     checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
   });
-
 })();
