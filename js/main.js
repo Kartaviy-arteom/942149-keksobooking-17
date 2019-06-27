@@ -105,10 +105,6 @@
   disableElements(descriptionField);
 
   var mainPin = map.querySelector('.map__pin--main');
-
-  mainPin.addEventListener('click', function () {
-    activeMap();
-  });
   var activeMap = function () {
     activationElements(formInputs);
     activationElements(formSelects);
@@ -180,4 +176,41 @@
   checkOutTime.addEventListener('change', function () {
     checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
   });
+
+  // перемещение пина
+
+  mainPin.addEventListener('mousedown', function (evt) {
+    var startСoordinates = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+        moveEvt.preventDefault();
+
+
+        var shift = {
+          x: startСoordinates.x - moveEvt.clientX,
+          y: startСoordinates.y - moveEvt.clientY
+        };
+
+        startСoordinates = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+
+        mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+        mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+    };
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      activeMap();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+  });
+
 })();
