@@ -114,9 +114,9 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-    mainPin.addEventListener('mouseup', function () {
-      insertCoordinate(mainActivePinCoordinate);
-    });
+/*    mainPin.addEventListener('mouseup', function () {*/
+      /*insertCoordinate(mainActivePinCoordinate);*/
+/*    });*/
   };
 
   var mainPinSizes = measureElement(mainPin);
@@ -187,6 +187,7 @@
 
     var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
+        activeMap();
         var TOP_MAP_RANGE = 630; // Хотя по сути это нижний предел!?
         var BOTTOM_MAP_RANGE = 130;
         var LEFT_MAP_RANGE = 0;
@@ -200,6 +201,10 @@
         startСoordinates = {
           x: moveEvt.clientX,
           y: moveEvt.clientY
+        };
+        var mainActivePinCoordinate = {
+          left: mainPin.offsetLeft,
+          top: mainPin.offsetTop + GAP_PIN_Y
         };
 
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
@@ -217,11 +222,11 @@
         if (parseInt(mainPin.style.left, 10) > rightMapRange) {
           mainPin.style.left = rightMapRange + 'px';
         };
+          insertCoordinate(mainActivePinCoordinate);
 
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      activeMap();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
