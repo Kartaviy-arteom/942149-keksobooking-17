@@ -187,7 +187,10 @@
 
     var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
-
+        var TOP_MAP_RANGE = 630; // Хотя по сути это нижний предел!?
+        var BOTTOM_MAP_RANGE = 130;
+        var LEFT_MAP_RANGE = 0;
+        var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
 
         var shift = {
           x: startСoordinates.x - moveEvt.clientX,
@@ -201,6 +204,20 @@
 
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+
+        if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
+          mainPin.style.top = TOP_MAP_RANGE + 'px';
+        };
+        if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
+          mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
+        };
+        if (parseInt(mainPin.style.left, 10) < LEFT_MAP_RANGE) {
+          mainPin.style.left = LEFT_MAP_RANGE;
+        };
+        if (parseInt(mainPin.style.left, 10) > rightMapRange) {
+          mainPin.style.left = rightMapRange + 'px';
+        };
+
     };
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
