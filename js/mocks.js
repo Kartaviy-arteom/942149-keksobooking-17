@@ -1,8 +1,6 @@
 'use strict';
 
 (function () {
-  var map = document.querySelector('.map');
-
   var similarListElement = document.querySelector('.map__pins');
   var similarPin = document.querySelector('#pin')
     .content
@@ -56,5 +54,5 @@
   window.mocks = {
     mock: mock,
     renderPin: renderPin
-  }
+  };
 })();
