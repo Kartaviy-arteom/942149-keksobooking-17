@@ -179,7 +179,7 @@
     var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
 
     if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
-      mainPin.style.top = TOP_MAP_RANGE + 'px';
+      mainPin.style.top = TOP_MAP_RANGE + 'px'
     }
     if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
       mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
