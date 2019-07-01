@@ -178,6 +178,34 @@
   });
 
   // перемещение пина
+  var activated = false;
+  var restrictMovement = function() {
+    var TOP_MAP_RANGE = 630; // Хотя по сути это нижний предел!?
+    var BOTTOM_MAP_RANGE = 130;
+    var LEFT_MAP_RANGE = 0;
+    var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
+
+    if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
+        mainPin.style.top = TOP_MAP_RANGE + 'px';
+    };
+    if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
+      mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
+    };
+    if (parseInt(mainPin.style.left, 10) < LEFT_MAP_RANGE) {
+      mainPin.style.left = LEFT_MAP_RANGE;
+    };
+    if (parseInt(mainPin.style.left, 10) > rightMapRange) {
+      mainPin.style.left = rightMapRange + 'px';
+    };
+  };
+
+  var getCoords = function () {
+    var mainActivePinCoordinate = {
+      left: mainPin.offsetLeft,
+      top: mainPin.offsetTop + GAP_PIN_Y
+    };
+    return mainActivePinCoordinate;
+  };
 
   mainPin.addEventListener('mousedown', function (evt) {
     var startСoordinates = {
@@ -187,11 +215,11 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      activeMap();
-      var TOP_MAP_RANGE = 630; // Хотя по сути это нижний предел!?
-      var BOTTOM_MAP_RANGE = 130;
-      var LEFT_MAP_RANGE = 0;
-      var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
+      if (!activated) {
+        activeMap();
+        activated = true;
+      };
+
 
       var shift = {
         x: startСoordinates.x - moveEvt.clientX,
@@ -202,33 +230,19 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
-      var mainActivePinCoordinate = {
-        left: mainPin.offsetLeft,
-        top: mainPin.offsetTop + GAP_PIN_Y
-      };
 
       mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
       mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
 
-      if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
-        mainPin.style.top = TOP_MAP_RANGE + 'px';
-      };
-      if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
-        mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
-      };
-      if (parseInt(mainPin.style.left, 10) < LEFT_MAP_RANGE) {
-        mainPin.style.left = LEFT_MAP_RANGE;
-      };
-      if (parseInt(mainPin.style.left, 10) > rightMapRange) {
-        mainPin.style.left = rightMapRange + 'px';
-      };
-      insertCoordinate(mainActivePinCoordinate);
+      restrictMovement();
+      insertCoordinate(getCoords());
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
+      insertCoordinate(getCoords());
     };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
