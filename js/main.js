@@ -179,17 +179,17 @@
     var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
 
     if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
-      mainPin.style.top = TOP_MAP_RANGE + 'px'
-    };
+      mainPin.style.top = TOP_MAP_RANGE + 'px';
+    }
     if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
-      mainPin.style.top = BOTTOM_MAP_RANGE + 'px'
-    };
+      mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
+    }
     if (parseInt(mainPin.style.left, 10) < LEFT_MAP_RANGE) {
-      mainPin.style.left = LEFT_MAP_RANGE
-    };
+      mainPin.style.left = LEFT_MAP_RANGE;
+    }
     if (parseInt(mainPin.style.left, 10) > rightMapRange) {
-      mainPin.style.left = rightMapRange + 'px'
-    };
+      mainPin.style.left = rightMapRange + 'px';
+    }
   };
 
   var getCoords = function () {
@@ -211,7 +211,7 @@
       if (!activated) {
         activeMap();
         activated = true;
-      };
+      }
 
 
       var shift = {
