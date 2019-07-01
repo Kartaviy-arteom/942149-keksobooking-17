@@ -194,7 +194,7 @@
 
   var getCoords = function () {
     var mainActivePinCoordinate = {
-      left: mainPin.offsetLeft,
+      left: Math.floor(mainPin.offsetLeft + mainPin.offsetWidth / 2),
       top: mainPin.offsetTop + GAP_PIN_Y
     };
     return mainActivePinCoordinate;
