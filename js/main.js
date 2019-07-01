@@ -114,9 +114,6 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-/*    mainPin.addEventListener('mouseup', function () {*/
-      /*insertCoordinate(mainActivePinCoordinate);*/
-/*    });*/
   };
 
   var mainPinSizes = measureElement(mainPin);
@@ -137,10 +134,6 @@
   insertCoordinate(mainPinCoordinate);
 
   var GAP_PIN_Y = 53;
-  var mainActivePinCoordinate = {
-    left: mainPinCoordinate.left,
-    top: mainPinCoordinate.top + GAP_PIN_Y
-  };
 
   // валидация формы
   var houseType = form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
@@ -179,23 +172,23 @@
 
   // перемещение пина
   var activated = false;
-  var restrictMovement = function() {
+  var restrictMovement = function () {
     var TOP_MAP_RANGE = 630; // Хотя по сути это нижний предел!?
     var BOTTOM_MAP_RANGE = 130;
     var LEFT_MAP_RANGE = 0;
     var rightMapRange = map.offsetWidth - mainPin.offsetWidth;
 
     if (parseInt(mainPin.style.top, 10) > TOP_MAP_RANGE) {
-        mainPin.style.top = TOP_MAP_RANGE + 'px';
+      mainPin.style.top = TOP_MAP_RANGE + 'px'
     };
     if (parseInt(mainPin.style.top, 10) < BOTTOM_MAP_RANGE) {
-      mainPin.style.top = BOTTOM_MAP_RANGE + 'px';
+      mainPin.style.top = BOTTOM_MAP_RANGE + 'px'
     };
     if (parseInt(mainPin.style.left, 10) < LEFT_MAP_RANGE) {
-      mainPin.style.left = LEFT_MAP_RANGE;
+      mainPin.style.left = LEFT_MAP_RANGE
     };
     if (parseInt(mainPin.style.left, 10) > rightMapRange) {
-      mainPin.style.left = rightMapRange + 'px';
+      mainPin.style.left = rightMapRange + 'px'
     };
   };
 
