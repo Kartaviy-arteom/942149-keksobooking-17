@@ -16,16 +16,16 @@
     variables: {
       form: form
     },
-  }
-;
+  };
 
-  var deactivateMap = function() {
+  var deactivateMap = function () {
     window.utils.disableElements(formInputs);
     window.utils.disableElements(formSelects);
     window.utils.disableElements(mapInputs);
     window.utils.disableElements(mapSelects);
     window.utils.disableElements(descriptionField);
-  }();
+  };
+  deactivateMap();
 
   var mainPin = map.querySelector('.map__pin--main');
   var activeMap = function () {
