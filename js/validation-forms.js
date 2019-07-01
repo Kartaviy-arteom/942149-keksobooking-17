@@ -1,5 +1,5 @@
 'use strict';
-(function() {
+(function () {
   var houseType = window.main.variables.form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
   var priceHouse = window.main.variables.form.querySelector('#price');
 
