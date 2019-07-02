@@ -6,15 +6,6 @@
     .content
     .querySelector('.map__pin');
 
-  var getPinSize = function (childElement, parentElement) {
-    var pin = childElement.cloneNode(true);
-    pin.setAttribute('style', 'visibility: hidden;');
-    parentElement.appendChild(pin);
-    var pinSizes = window.utils.measureElement(pin);
-    parentElement.removeChild(pin);
-    return pinSizes;
-  };
-
   var createMock = function (childElement, parentElement) {
     var types = ['palace', 'flat', 'house', 'bungalo'];
     var announcement = [];
@@ -38,21 +29,8 @@
   };
 
   var mock = createMock(similarPin, similarListElement);
-  var pinSizes = getPinSize(similarPin, similarListElement);
-
-  var renderPin = function (pinData) {
-    var pin = similarPin.cloneNode(true);
-    var pinImage = pin.querySelector('img');
-
-    pin.setAttribute('style', 'left: ' + (pinData.location.x + pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
-    pinImage.setAttribute('src', pinData.author.avatar);
-    pinImage.setAttribute('alt', pinData.offer.type);
-
-    return pin;
-  };
 
   window.mocks = {
     mock: mock,
-    renderPin: renderPin
   };
 })();

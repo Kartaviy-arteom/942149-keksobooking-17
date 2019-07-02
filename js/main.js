@@ -36,7 +36,7 @@
     window.utils.activationElements(descriptionField);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    window.utils.insertItems(window.mocks.mock, window.mocks.renderPin, similarListElement);
+    window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);
   };
 
   var mainPinSizes = window.utils.measureElement(mainPin);
@@ -94,8 +94,6 @@
         activeMap();
         activated = true;
       }
-
-
       var shift = {
         x: startСoordinates.x - moveEvt.clientX,
         y: startСoordinates.y - moveEvt.clientY
