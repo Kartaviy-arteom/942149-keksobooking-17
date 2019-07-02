@@ -36,7 +36,8 @@
     window.utils.activationElements(descriptionField);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);
+    window.load(window.onSuccess, window.onError);
+    /*window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
   };
 
   var mainPinSizes = window.utils.measureElement(mainPin);
