@@ -105,10 +105,6 @@
   disableElements(descriptionField);
 
   var mainPin = map.querySelector('.map__pin--main');
-
-  mainPin.addEventListener('click', function () {
-    activeMap();
-  });
   var activeMap = function () {
     activationElements(formInputs);
     activationElements(formSelects);
@@ -118,9 +114,6 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     insertItems(mock, renderPin, similarListElement);
-    mainPin.addEventListener('mouseup', function () {
-      insertCoordinate(mainActivePinCoordinate);
-    });
   };
 
   var mainPinSizes = measureElement(mainPin);
@@ -141,10 +134,6 @@
   insertCoordinate(mainPinCoordinate);
 
   var GAP_PIN_Y = 53;
-  var mainActivePinCoordinate = {
-    left: mainPinCoordinate.left,
-    top: mainPinCoordinate.top + GAP_PIN_Y
-  };
 
   // валидация формы
   var houseType = form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
@@ -180,4 +169,79 @@
   checkOutTime.addEventListener('change', function () {
     checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
   });
+
+  // перемещение пина
+  var activated = false;
+  var restrictMovement = function () {
+    var rectangle = {
+      bottom: 630,
+      top: 130,
+      left: 0,
+      right: map.offsetWidth - mainPin.offsetWidth
+    };
+
+    if (parseInt(mainPin.style.top, 10) > rectangle.bottom) {
+      mainPin.style.top = rectangle.bottom + 'px';
+    }
+    if (parseInt(mainPin.style.top, 10) < rectangle.top) {
+      mainPin.style.top = rectangle.top + 'px';
+    }
+    if (parseInt(mainPin.style.left, 10) < rectangle.left) {
+      mainPin.style.left = rectangle.left;
+    }
+    if (parseInt(mainPin.style.left, 10) > rectangle.right) {
+      mainPin.style.left = rectangle.right + 'px';
+    }
+  };
+
+  var getCoords = function () {
+    var mainActivePinCoordinate = {
+      left: Math.floor(mainPin.offsetLeft + mainPin.offsetWidth / 2),
+      top: mainPin.offsetTop + GAP_PIN_Y
+    };
+    return mainActivePinCoordinate;
+  };
+
+  mainPin.addEventListener('mousedown', function (evt) {
+    var startСoordinates = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+      if (!activated) {
+        activeMap();
+        activated = true;
+      }
+
+
+      var shift = {
+        x: startСoordinates.x - moveEvt.clientX,
+        y: startСoordinates.y - moveEvt.clientY
+      };
+
+      startСoordinates = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+
+      restrictMovement();
+      insertCoordinate(getCoords());
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      insertCoordinate(getCoords());
+    };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+  });
+
 })();
