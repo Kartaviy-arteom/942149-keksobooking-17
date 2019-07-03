@@ -3,7 +3,6 @@
 (function (deps) {
   var map = document.querySelector('.map');
 
-  var similarListElement = document.querySelector('.map__pins');
   var form = document.querySelector('.ad-form');
   var formInputs = form.querySelectorAll('input');
   var formSelects = form.querySelectorAll('select');
@@ -38,7 +37,7 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     deps.load(deps.success, deps.error);
-    /*window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
+    /* window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
   };
 
   var mainPinSizes = deps.measureElement(mainPin);

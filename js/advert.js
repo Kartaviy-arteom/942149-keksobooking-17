@@ -13,9 +13,9 @@
   var load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    xhr.timeout = 30000;
+    xhr.timeout = 10000;
 
-    xhr.open('GET', 'https://js.dump.academy/keksobooking/daa');
+    xhr.open('GET', 'https://js.dump.academy/keksobooking/daa'); // https://js.dump.academy/keksobooking/data
     xhr.send();
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
@@ -51,7 +51,7 @@
     load: load,
     success: success,
     error: error
-  }
+  };
 
 })({
   insertItems: window.utils.insertItems,
