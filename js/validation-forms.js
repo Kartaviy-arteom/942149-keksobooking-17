@@ -1,7 +1,7 @@
 'use strict';
-(function () {
-  var houseType = window.main.variables.form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
-  var priceHouse = window.main.variables.form.querySelector('#price');
+(function (deps) {
+  var houseType = deps.form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
+  var priceHouse = deps.form.querySelector('#price');
 
   houseType.addEventListener('change', function () {
     var houseTypeIndex = houseType.options.selectedIndex;
@@ -34,4 +34,6 @@
     checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
   });
 
-})();
+})({
+  form: window.main.variables.form
+});

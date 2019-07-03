@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function (deps) {
   var map = document.querySelector('.map');
 
   var similarListElement = document.querySelector('.map__pins');
@@ -14,34 +14,36 @@
 
   window.main = {
     variables: {
-      form: form
+      form: form,
+      map: map
     },
   };
 
   var deactivateMap = function () {
-    window.utils.disableElements(formInputs);
-    window.utils.disableElements(formSelects);
-    window.utils.disableElements(mapInputs);
-    window.utils.disableElements(mapSelects);
-    window.utils.disableElements(descriptionField);
+    deps.disableElements(formInputs);
+    deps.disableElements(formSelects);
+    deps.disableElements(mapInputs);
+    deps.disableElements(mapSelects);
+    deps.disableElements(descriptionField);
   };
   deactivateMap();
 
   var mainPin = map.querySelector('.map__pin--main');
   var activeMap = function () {
-    window.utils.activationElements(formInputs);
-    window.utils.activationElements(formSelects);
-    window.utils.activationElements(mapInputs);
-    window.utils.activationElements(mapSelects);
-    window.utils.activationElements(descriptionField);
+    deps.activationElements(formInputs);
+    deps.activationElements(formSelects);
+    deps.activationElements(mapInputs);
+    deps.activationElements(mapSelects);
+    deps.activationElements(descriptionField);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);
+    deps.load(deps.success, deps.error);
+    /*window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
   };
 
-  var mainPinSizes = window.utils.measureElement(mainPin);
+  var mainPinSizes = deps.measureElement(mainPin);
 
-  var mainPinCoordinate = window.utils.getElementСoordinate(mainPin, mainPinSizes);
+  var mainPinCoordinate = deps.getElementСoordinate(mainPin, mainPinSizes);
 
   var addressField = document.getElementById('address');
   var insertCoordinate = function (coordinate) {
@@ -122,4 +124,12 @@
 
   });
 
-})();
+})({
+  disableElements: window.utils.disableElements,
+  activationElements: window.utils.activationElements,
+  load: window.advert.load,
+  measureElement: window.utils.measureElement,
+  getElementСoordinate: window.utils.getElementСoordinate,
+  success: window.advert.success,
+  error: window.advert.error
+});
