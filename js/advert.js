@@ -15,7 +15,7 @@
     xhr.responseType = 'json';
     xhr.timeout = 10000;
 
-    xhr.open('GET', 'https://js.dump.academy/keksobooking/daa'); // https://js.dump.academy/keksobooking/data
+    xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
     xhr.send();
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
@@ -26,25 +26,35 @@
     });
   };
 
+  var repeatLoad = function () {
+    load(success, error);
+  };
 
   var success = function (adverts) {
     deps.insertItems(adverts, deps.renderPin, similarListElement);
   };
+
+
   var error = function () {
     var errorPopup = similarErrorPopup.cloneNode(true);
     map.appendChild(errorPopup);
     var errorButton = map.querySelector('.error__button');
-    errorButton.addEventListener('click', function () {
-      map.removeChild(errorPopup);
-      setTimeout(load(success, error), 100000);
-    });
-    document.addEventListener('keydown', function (evt) {
-      if (evt.keyCode === ENTER_KEYCODE || evt.keyCode === ESC_KEYCODE) {
-        map.removeChild(errorPopup);
-        setTimeout(load(success, error), 100000);
-      }
-    });
 
+    var closeError = function () {
+      map.removeChild(errorPopup);
+      document.removeEventListener('click', onDocumentEscOrEnterPress);
+      setTimeout(repeatLoad, 3000);
+    };
+
+    var onDocumentEscOrEnterPress = function (evt) {
+      if (evt.keyCode === ENTER_KEYCODE || evt.keyCode === ESC_KEYCODE) {
+        closeError();
+      };
+    };
+
+    errorButton.addEventListener('click', closeError);
+
+    document.addEventListener('keydown', onDocumentEscOrEnterPress);
   };
 
   window.advert = {

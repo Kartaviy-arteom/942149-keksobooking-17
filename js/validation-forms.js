@@ -1,6 +1,6 @@
 'use strict';
 (function (deps) {
-  var houseType = deps.form.querySelector('#type'); // не понятно, как осуществить поиск по id внутри nodelist formSelects
+  var houseType = deps.form.querySelector('#type');
   var priceHouse = deps.form.querySelector('#price');
 
   houseType.addEventListener('change', function () {
@@ -23,7 +23,6 @@
     }
   });
 
-  // время заезда и выезда
   var checkInTime = window.main.variables.form.querySelector('#timein');
   var checkOutTime = window.main.variables.form.querySelector('#timeout');
 

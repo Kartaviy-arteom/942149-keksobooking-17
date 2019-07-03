@@ -37,7 +37,6 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     deps.load(deps.success, deps.error);
-    /* window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
   };
 
   var mainPinSizes = deps.measureElement(mainPin);
