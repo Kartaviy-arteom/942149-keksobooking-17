@@ -23,7 +23,7 @@
 
       try {
         JSON.parse(xhr.responseText);
-      } catch 
+      } catch (err) {
         alert('ALERT! RED CODE!');
       };
       if (xhr.status === 200) {
