@@ -128,34 +128,34 @@
   });
 
 
-  form.addEventListener('submit', function(evt) {
+  form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
-    deps.uploadForm(new FormData(form), function (response) {
+    deps.uploadForm(new FormData(form), function () {
       var similarSuccessPopup = document.querySelector('#success')
-    .content
-    .querySelector('.success');
-    var successPopup = similarSuccessPopup.cloneNode(true);
-    map.appendChild(successPopup);
-    var closeSuccessPopup = function () { // временный код
-      map.removeChild(successPopup);
-      document.removeEventListener('keydown', onDocumentEscPress);
-      document.removeEventListener('click', onDocumentClick);
-    };
-    var onDocumentEscPress = function (evt) {
-      if (evt.keyCode === KeyCode.ESC) {
+      .content
+      .querySelector('.success');
+      var successPopup = similarSuccessPopup.cloneNode(true);
+      map.appendChild(successPopup);
+      var closeSuccessPopup = function () { // временный код
+        map.removeChild(successPopup);
+        document.removeEventListener('keydown', onDocumentEscPress);
+        document.removeEventListener('click', onDocumentClick);
+      };
+      var onDocumentEscPress = function (evt) {
+        if (evt.keyCode === KeyCode.ESC) {
+          closeSuccessPopup();
+        };
+      };
+
+      var onDocumentClick  = function (evt) {
         closeSuccessPopup();
       };
-    };
 
-    var onDocumentClick  = function (evt) {
-      closeSuccessPopup();
-    };
-
-    document.addEventListener('keydown', onDocumentEscPress);
-    document.addEventListener('click', onDocumentClick);
-    buttomSubmit.removeAttribute('disabled', 'disabled');
-    })
+      document.addEventListener('keydown', onDocumentEscPress);
+      document.addEventListener('click', onDocumentClick);
+      buttomSubmit.removeAttribute('disabled', 'disabled');
+    });
   });
 
 
