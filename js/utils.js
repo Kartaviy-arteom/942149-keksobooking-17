@@ -23,7 +23,7 @@
     for (var i = 0; i < items.length; i++) {
       if (items[i].offer) {
         fragment.appendChild(renderItem(items[i]));
-      };
+      }
     }
     target.appendChild(fragment);
   };
