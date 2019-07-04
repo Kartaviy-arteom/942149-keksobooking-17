@@ -65,7 +65,7 @@
     };
 
 
-  var onDocumentClick = function () {
+    var onDocumentClick = function () {
       closeError();
     };
 
