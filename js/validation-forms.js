@@ -36,18 +36,17 @@
     var roomNumber = deps.form.querySelector('#room_number');
     var capacity = deps.form.querySelector('#capacity');
     var roomNumberIndex = roomNumber.options.selectedIndex;
-    console.log(roomToPlaces[roomNumber.options[roomNumberIndex].text]);
     var capacityVariants = roomToPlaces[roomNumber.options[roomNumberIndex].text].split(', ');
 
-    for (var i = 0; i < capacity.options.length; i ++) {
+    for (var i = 0; i < capacity.options.length; i++) {
       capacity.options[i].setAttribute('disabled', 'disabled');
-      for (var j = 0; j < capacityVariants.length; j ++) {
+      for (var j = 0; j < capacityVariants.length; j++) {
         if (capacity.options[i].text === capacityVariants[j]) {
           capacity.options[i].removeAttribute('disabled', 'disabled');
           capacity.options[i].selected = true;
         }
       }
-    };
+    }
 
     roomNumber.addEventListener('change', changeCapacity);
   };
