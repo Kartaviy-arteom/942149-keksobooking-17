@@ -1,9 +1,11 @@
 'use strict';
 
-(function () {
+(function (deps) {
+  var KeyCode = {
+    ESC: 27,
+    ENTER: 13
+  };
   var map = document.querySelector('.map');
-
-  var similarListElement = document.querySelector('.map__pins');
   var form = document.querySelector('.ad-form');
   var formInputs = form.querySelectorAll('input');
   var formSelects = form.querySelectorAll('select');
@@ -11,38 +13,39 @@
   var mapInputs = mapFilters.querySelectorAll('input');
   var mapSelects = mapFilters.querySelectorAll('select');
   var descriptionField = [form.querySelector('#description')];
+  var buttomSubmit = form.querySelector('.ad-form__submit');
 
   window.main = {
     variables: {
-      form: form
+      form: form,
+      map: map
     },
   };
 
   var deactivateMap = function () {
-    window.utils.disableElements(formInputs);
-    window.utils.disableElements(formSelects);
-    window.utils.disableElements(mapInputs);
-    window.utils.disableElements(mapSelects);
-    window.utils.disableElements(descriptionField);
+    deps.disableElements(formInputs);
+    deps.disableElements(formSelects);
+    deps.disableElements(mapInputs);
+    deps.disableElements(mapSelects);
+    deps.disableElements(descriptionField);
   };
   deactivateMap();
 
   var mainPin = map.querySelector('.map__pin--main');
   var activeMap = function () {
-    window.utils.activationElements(formInputs);
-    window.utils.activationElements(formSelects);
-    window.utils.activationElements(mapInputs);
-    window.utils.activationElements(mapSelects);
-    window.utils.activationElements(descriptionField);
+    deps.activationElements(formInputs);
+    deps.activationElements(formSelects);
+    deps.activationElements(mapInputs);
+    deps.activationElements(mapSelects);
+    deps.activationElements(descriptionField);
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
-    window.load(window.onSuccess, window.onError);
-    /*window.utils.insertItems(window.mocks.mock, window.utils.renderPin, similarListElement);*/
+    deps.load(deps.success, deps.error);
   };
 
-  var mainPinSizes = window.utils.measureElement(mainPin);
+  var mainPinSizes = deps.measureElement(mainPin);
 
-  var mainPinCoordinate = window.utils.getElementСoordinate(mainPin, mainPinSizes);
+  var mainPinCoordinate = deps.getElementСoordinate(mainPin, mainPinSizes);
 
   var addressField = document.getElementById('address');
   var insertCoordinate = function (coordinate) {
@@ -123,4 +126,43 @@
 
   });
 
-})();
+  form.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    buttomSubmit.setAttribute('disabled', 'disabled');
+    deps.uploadForm(new FormData(form), function (response) {
+      var similarSuccessPopup = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+    var successPopup = similarSuccessPopup.cloneNode(true);
+    map.appendChild(successPopup);
+    var closeSuccessPopup = function () { // временный код
+      map.removeChild(successPopup);
+      document.removeEventListener('keydown', onDocumentEscPress);
+      document.removeEventListener('click', onDocumentClick);
+    };
+    var onDocumentEscPress = function (evt) {
+      if (evt.keyCode === KeyCode.ESC) {
+        closeSuccessPopup();
+      };
+    };
+
+    var onDocumentClick  = function (evt) {
+      closeSuccessPopup();
+    };
+
+    document.addEventListener('keydown', onDocumentEscPress);
+    document.addEventListener('click', onDocumentClick);
+    buttomSubmit.removeAttribute('disabled', 'disabled');
+    })
+  });
+
+})({
+  disableElements: window.utils.disableElements,
+  activationElements: window.utils.activationElements,
+  load: window.advert.load,
+  measureElement: window.utils.measureElement,
+  getElementСoordinate: window.utils.getElementСoordinate,
+  success: window.advert.success,
+  error: window.advert.error,
+  uploadForm: window.uploadForm
+});

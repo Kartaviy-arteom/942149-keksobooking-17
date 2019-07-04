@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function (deps) {
   var similarListElement = document.querySelector('.map__pins');
   var similarPin = document.querySelector('#pin')
     .content
@@ -9,7 +9,7 @@
   var createMock = function (childElement, parentElement) {
     var types = ['palace', 'flat', 'house', 'bungalo'];
     var announcement = [];
-    var mapX = window.utils.measureElement(parentElement).x;
+    var mapX = deps.measureElement(parentElement).x;
 
     for (var i = 0; i < 8; i++) {
       announcement[i] = {
@@ -17,7 +17,7 @@
           avatar: 'img/avatars/user0' + (i + 1) + '.png'
         },
         offer: {
-          type: window.utils.chooseRandomElement(types)
+          type: deps.chooseRandomElement(types)
         },
         location: {
           x: Math.floor(Math.random() * mapX),
@@ -33,4 +33,7 @@
   window.mocks = {
     mock: mock,
   };
-})();
+})({
+  measureElement: window.utils.measureElement,
+  chooseRandomElement: window.utils.chooseRandomElement
+});
