@@ -6,6 +6,7 @@
     ENTER: 13
   };
   var map = document.querySelector('.map');
+
   var form = document.querySelector('.ad-form');
   var formInputs = form.querySelectorAll('input');
   var formSelects = form.querySelectorAll('select');
@@ -126,6 +127,7 @@
 
   });
 
+
   form.addEventListener('submit', function(evt) {
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
@@ -156,6 +158,7 @@
     })
   });
 
+
 })({
   disableElements: window.utils.disableElements,
   activationElements: window.utils.activationElements,
@@ -163,6 +166,8 @@
   measureElement: window.utils.measureElement,
   getElementСoordinate: window.utils.getElementСoordinate,
   success: window.advert.success,
+
   error: window.advert.error,
   uploadForm: window.uploadForm
+
 });

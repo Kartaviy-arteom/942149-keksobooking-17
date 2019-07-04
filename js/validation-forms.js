@@ -26,7 +26,6 @@
     checkInTime.options.selectedIndex = checkOutTime.options.selectedIndex;
   });
 
-  //
   var changeCapacity = function () {
     var roomToPlaces = {
       '1 комната': 'для 1 гостя',

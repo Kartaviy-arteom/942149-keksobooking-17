@@ -1,11 +1,13 @@
 'use strict';
 
 (function (deps) {
+
   var KeyCode = {
     ESC: 27,
     ENTER: 13
   };
   var main = document.querySelector('main');
+
   var similarListElement = document.querySelector('.map__pins');
   var similarErrorPopup = document.querySelector('#error')
     .content
@@ -18,6 +20,7 @@
     xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
     xhr.send();
     xhr.addEventListener('load', function () {
+
       try {
         JSON.parse(xhr.responseText);
       } catch {
@@ -25,6 +28,7 @@
       };
       if (xhr.status === 200) {
         onSuccess(JSON.parse(xhr.responseText));
+
       } else {
         onError();
       }
@@ -42,6 +46,7 @@
 
   var error = function () {
     var errorPopup = similarErrorPopup.cloneNode(true);
+
     main.appendChild(errorPopup);
     var errorButton = main.querySelector('.error__button');
 
@@ -54,9 +59,11 @@
 
     var onDocumentEscPress = function (evt) {
       if (evt.keyCode === KeyCode.ESC) {
+
         closeError();
       };
     };
+
 
     var onDocumentClick  = function (evt) {
       closeError();
@@ -66,6 +73,7 @@
 
     document.addEventListener('keydown', onDocumentEscPress);
     document.addEventListener('click', onDocumentClick);
+
   };
 
   window.advert = {
