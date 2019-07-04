@@ -142,13 +142,13 @@
         document.removeEventListener('keydown', onDocumentEscPress);
         document.removeEventListener('click', onDocumentClick);
       };
-      var onDocumentEscPress = function (evt) {
-        if (evt.keyCode === KeyCode.ESC) {
+      var onDocumentEscPress = function (evtPress) {
+        if (evtPress.keyCode === KeyCode.ESC) {
           closeSuccessPopup();
-        };
+        }
       };
 
-      var onDocumentClick  = function (evt) {
+      var onDocumentClick = function () {
         closeSuccessPopup();
       };
 
