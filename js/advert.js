@@ -25,7 +25,7 @@
         JSON.parse(xhr.responseText);
       } catch (err) {
         alert('ALERT! RED CODE!');
-      };
+      }
       if (xhr.status === 200) {
         onSuccess(JSON.parse(xhr.responseText));
 
@@ -61,11 +61,11 @@
       if (evt.keyCode === KeyCode.ESC) {
 
         closeError();
-      };
+      }
     };
 
 
-    var onDocumentClick  = function (evt) {
+  var onDocumentClick = function () {
       closeError();
     };
 
