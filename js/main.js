@@ -1,10 +1,6 @@
 'use strict';
 
 (function (deps) {
-  var KeyCode = {
-    ESC: 27,
-    ENTER: 13
-  };
   var map = document.querySelector('.map');
 
   var form = document.querySelector('.ad-form');
@@ -143,7 +139,7 @@
         document.removeEventListener('click', onDocumentClick);
       };
       var onDocumentEscPress = function (evtPress) {
-        if (evtPress.keyCode === KeyCode.ESC) {
+        if (evtPress.keyCode === deps.keyCode.ESC) {
           closeSuccessPopup();
         }
       };
@@ -166,7 +162,7 @@
   measureElement: window.utils.measureElement,
   getElementСoordinate: window.utils.getElementСoordinate,
   success: window.advert.success,
-
+  keyCode: window.advert.keyCode,
   error: window.advert.error,
   uploadForm: window.uploadForm
 

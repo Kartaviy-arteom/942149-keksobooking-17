@@ -16,8 +16,8 @@
     priceHouse.setAttribute('placeholder', houseToMinPrice[houseType.options[houseTypeIndex].text]);
   });
 
-  var checkInTime = window.main.variables.form.querySelector('#timein');
-  var checkOutTime = window.main.variables.form.querySelector('#timeout');
+  var checkInTime = deps.form.querySelector('#timein');
+  var checkOutTime = deps.form.querySelector('#timeout');
 
   checkInTime.addEventListener('change', function () {
     checkOutTime.options.selectedIndex = checkInTime.options.selectedIndex;

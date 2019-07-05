@@ -22,16 +22,15 @@
     xhr.addEventListener('load', function () {
 
       try {
-        JSON.parse(xhr.responseText);
-      } catch (err) {
-        alert('ALERT! RED CODE!');
-      }
-      if (xhr.status === 200) {
+        if (xhr.status === 200) {
         onSuccess(JSON.parse(xhr.responseText));
 
-      } else {
-        onError();
-      }
+        } else {
+        onError()};
+
+      } catch (err) {
+          alert('ALERT! RED CODE!');
+        };
     });
   };
 
@@ -79,7 +78,8 @@
   window.advert = {
     load: load,
     success: success,
-    error: error
+    error: error,
+    keyCode: KeyCode
   };
 
 })({
