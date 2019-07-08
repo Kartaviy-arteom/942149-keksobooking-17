@@ -43,8 +43,10 @@
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
 
     //
-    var houseType = document.querySelector('#housing-type');
-    houseType.addEventListener('change', function () {
+    var filtersForm = document.querySelector('.map__filters');
+    var houseType = filtersForm.querySelector('#housing-type');
+    var housingGuests = filtersForm.querySelector('#housing-guests');
+    filtersForm.addEventListener('change', function () {
       Array.from(similarListElement.children).forEach(function (element) {
         if (element.className !== 'map__pin--main' && element.className === 'map__pin') {
           element.remove();
@@ -53,7 +55,10 @@
       var copyData = adverts.slice();
       console.log(copyData);
       var newData = copyData.filter(function(item) {
-        return (item.offer.type === houseType.options[houseType.options.selectedIndex].value || houseType.options[houseType.options.selectedIndex].value === 'any');
+        var isHouseType = Boolean(item.offer.type === houseType.options[houseType.options.selectedIndex].value || houseType.options[houseType.options.selectedIndex].value === 'any');
+        var isGuestNumber = Boolean(String(item.offer.guests) === housingGuests.options[housingGuests.options.selectedIndex].value || housingGuests.options[housingGuests.options.selectedIndex].value === 'any');
+        return (isHouseType && isGuestNumber);
+
       })
       .slice(0, 5);
       console.log(newData);
