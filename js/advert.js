@@ -39,7 +39,27 @@
   };
 
   var success = function (adverts) {
-    deps.insertItems(adverts, deps.renderPin, similarListElement);
+    var data = adverts.slice();
+    deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
+
+    //
+    var houseType = document.querySelector('#housing-type');
+    houseType.addEventListener('change', function () {
+      Array.from(similarListElement.children).forEach(function (element) {
+        if (element.className !== 'map__pin--main' && element.className === 'map__pin') {
+          element.remove();
+        }
+      });
+      var copyData = adverts.slice();
+      console.log(copyData);
+      var newData = copyData.filter(function(item) {
+        return (item.offer.type === houseType.options[houseType.options.selectedIndex].value || houseType.options[houseType.options.selectedIndex].value === 'any');
+      })
+      .slice(0, 5);
+      console.log(newData);
+      deps.insertItems(newData, deps.renderPin, similarListElement); // Теряется 3 элемент при выводе бунгало!!!
+    });
+
   };
 
 
