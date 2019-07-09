@@ -46,6 +46,8 @@
     var filtersForm = document.querySelector('.map__filters');
     var houseType = filtersForm.querySelector('#housing-type');
     var housingGuests = filtersForm.querySelector('#housing-guests');
+    var housingRooms = filtersForm.querySelector('#housing-rooms');
+    var housingPrice = filtersForm.querySelector('#housing-price');
     filtersForm.addEventListener('change', function () {
       Array.from(similarListElement.children).forEach(function (element) {
         if (element.className !== 'map__pin--main' && element.className === 'map__pin') {
@@ -57,12 +59,38 @@
       var newData = copyData.filter(function(item) {
         var isHouseType = Boolean(item.offer.type === houseType.options[houseType.options.selectedIndex].value || houseType.options[houseType.options.selectedIndex].value === 'any');
         var isGuestNumber = Boolean(String(item.offer.guests) === housingGuests.options[housingGuests.options.selectedIndex].value || housingGuests.options[housingGuests.options.selectedIndex].value === 'any');
-        return (isHouseType && isGuestNumber);
+        var isRoomNumber = Boolean(String(item.offer.rooms) === housingRooms.options[housingRooms.options.selectedIndex].value || housingRooms.options[housingRooms.options.selectedIndex].value === 'any');
+        var housingPriceType = '';
+        if (item.offer.price < 10000) {
+          housingPriceType = 'low';
+        } else if (item.offer.price >= 10000 && item.offer.price < 50000) {
+          housingPriceType = 'middle';
+        } else if (item.offer.price >= 50000) {
+          housingPriceType = 'high';
+        };
+        var isHousingPriceType = Boolean(housingPriceType === housingPrice.options[housingPrice.options.selectedIndex].value || housingPrice.options[housingPrice.options.selectedIndex].value === 'any');
+
+        // features in house
+        var houseFeatures = Array.from(filtersForm.querySelectorAll('.map__checkbox:checked'));
+        var houseFeaturesValues = [];
+        houseFeatures.forEach(function(item) {
+          houseFeaturesValues.push(item.value);
+        });
+        console.log(houseFeaturesValues); // выводится в консоль несколько раз?
+        var isContain = function (allegedParentArray, allegedChildArray) {
+          for (var i = 0; i < allegedChildArray.length; i++) {
+            if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
+          }
+          return true;
+        };
+        var isFeature = isContain(item.offer.features, houseFeaturesValues);
+
+        return (isHouseType && isGuestNumber && isRoomNumber && isHousingPriceType && isFeature);
 
       })
       .slice(0, 5);
       console.log(newData);
-      deps.insertItems(newData, deps.renderPin, similarListElement); // Теряется 3 элемент при выводе бунгало!!!
+      deps.insertItems(newData, deps.renderPin, similarListElement);
     });
 
   };

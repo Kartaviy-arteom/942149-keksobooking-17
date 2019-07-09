@@ -52,7 +52,7 @@
     var pin = similarPin.cloneNode(true);
     var pinImage = pin.querySelector('img');
 
-    pin.setAttribute('style', 'left: ' + (pinData.location.x + pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
+    pin.setAttribute('style', 'left: ' + (pinData.location.x - pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
     pinImage.setAttribute('src', pinData.author.avatar);
     pinImage.setAttribute('alt', pinData.offer.type);
 
