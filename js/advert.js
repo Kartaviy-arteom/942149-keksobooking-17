@@ -43,11 +43,17 @@
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
 
+    var lastTimeout;
     filtersForm.addEventListener('change', function () {
-      deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-      var copyData = adverts.slice();
-      var newData = deps.filterAds(copyData).slice(0, 5);
-      deps.insertItems(newData, deps.renderPin, similarListElement);
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+        var copyData = adverts.slice();
+        var newData = deps.filterAds(copyData).slice(0, 5);
+        deps.insertItems(newData, deps.renderPin, similarListElement);
+      }, 500);
     });
   };
 
