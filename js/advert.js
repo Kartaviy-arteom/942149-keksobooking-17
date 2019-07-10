@@ -6,6 +6,7 @@
     ESC: 27,
     ENTER: 13
   };
+  var filtersForm = document.querySelector('.map__filters');
   var main = document.querySelector('main');
 
   var similarListElement = document.querySelector('.map__pins');
@@ -42,51 +43,12 @@
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
 
-    //
-    var filtersForm = document.querySelector('.map__filters');
-    var houseType = filtersForm.querySelector('#housing-type');
-    var housingGuests = filtersForm.querySelector('#housing-guests');
-    var housingRooms = filtersForm.querySelector('#housing-rooms');
-    var housingPrice = filtersForm.querySelector('#housing-price');
     filtersForm.addEventListener('change', function () {
       deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-
       var copyData = adverts.slice();
-      var newData = copyData.filter(function(item) {
-        var isHouseType = deps.isItTrueChoice(item.offer.type, houseType);
-        var isGuestNumber = deps.isItTrueChoice(item.offer.guests, housingGuests);
-        var isRoomNumber = deps.isItTrueChoice(item.offer.rooms, housingRooms);
-
-        var housingPriceType = '';
-        if (item.offer.price < 10000) {
-          housingPriceType = 'low';
-        } else if (item.offer.price >= 10000 && item.offer.price < 50000) {
-          housingPriceType = 'middle';
-        } else if (item.offer.price >= 50000) {
-          housingPriceType = 'high';
-        };
-        var isHousingPriceType = deps.isItTrueChoice(housingPriceType, housingPrice);
-        // features in house
-        var houseFeatures = Array.from(filtersForm.querySelectorAll('.map__checkbox:checked'));
-        var houseFeaturesValues = [];
-        houseFeatures.forEach(function(item) {
-          houseFeaturesValues.push(item.value);
-        });
-        var isContain = function (allegedParentArray, allegedChildArray) {
-          for (var i = 0; i < allegedChildArray.length; i++) {
-            if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
-          }
-          return true;
-        };
-        var isFeature = isContain(item.offer.features, houseFeaturesValues);
-
-        return (isHouseType && isGuestNumber && isRoomNumber && isHousingPriceType && isFeature);
-
-      })
-      .slice(0, 5);
+      var newData = deps.filterAds(copyData).slice(0, 5);
       deps.insertItems(newData, deps.renderPin, similarListElement);
     });
-
   };
 
 
@@ -133,6 +95,8 @@
   insertItems: window.utils.insertItems,
   renderPin: window.utils.renderPin,
   deleteChildren: window.utils.deleteChildren,
-  isItTrueChoice: window.utils.isItTrueChoice
+  isItTrueChoice: window.utils.isItTrueChoice,
+  isContain: window.utils.isContain,
+  filterAds: window.filters.filterAds
 });
 

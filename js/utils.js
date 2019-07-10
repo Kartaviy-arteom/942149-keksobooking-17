@@ -83,6 +83,13 @@
 
   var pinSizes = getPinSize(similarPin, similarListElement);
 
+  var isContain = function (allegedParentArray, allegedChildArray) {
+    for (var i = 0; i < allegedChildArray.length; i++) {
+      if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
+    }
+    return true;
+  };
+
   window.utils = {
     chooseRandomElement: chooseRandomElement,
     measureElement: measureElement,
@@ -92,6 +99,7 @@
     getElementСoordinate: getElementСoordinate,
     renderPin: renderPin,
     deleteChildren: deleteChildren,
-    isItTrueChoice: isItTrueChoice
+    isItTrueChoice: isItTrueChoice,
+    isContain: isContain
   };
 })();
