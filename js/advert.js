@@ -49,11 +49,8 @@
     var housingRooms = filtersForm.querySelector('#housing-rooms');
     var housingPrice = filtersForm.querySelector('#housing-price');
     filtersForm.addEventListener('change', function () {
-      Array.from(similarListElement.children).forEach(function (element) {
-        if (element.className !== 'map__pin--main' && element.className === 'map__pin') {
-          element.remove();
-        }
-      });
+      deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+
       var copyData = adverts.slice();
       console.log(copyData);
       var newData = copyData.filter(function(item) {
@@ -138,5 +135,6 @@
 })({
   insertItems: window.utils.insertItems,
   renderPin: window.utils.renderPin,
+  deleteChildren: window.utils.deleteChildren
 });
 

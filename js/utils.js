@@ -68,6 +68,14 @@
     return pinSizes;
   };
 
+  var deleteChildren = function (parentElement, childClassName, exceptionClassName) {
+    Array.from(parentElement.children).forEach(function (element) {
+      if (element.className !== exceptionClassName && element.className === childClassName) {
+        element.remove();
+      }
+    });
+  }
+
   var pinSizes = getPinSize(similarPin, similarListElement);
 
   window.utils = {
@@ -77,6 +85,7 @@
     disableElements: disableElements,
     activationElements: activationElements,
     getElementСoordinate: getElementСoordinate,
-    renderPin: renderPin
+    renderPin: renderPin,
+    deleteChildren: deleteChildren
   };
 })();
