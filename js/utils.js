@@ -74,7 +74,12 @@
         element.remove();
       }
     });
-  }
+  };
+
+  var isItTrueChoice = function (dataValue, selectList) {
+    var selectedValue = selectList.options[selectList.options.selectedIndex].value;
+    return Boolean(String(dataValue) === selectedValue || selectedValue === 'any');
+  };
 
   var pinSizes = getPinSize(similarPin, similarListElement);
 
@@ -86,6 +91,7 @@
     activationElements: activationElements,
     getElementСoordinate: getElementСoordinate,
     renderPin: renderPin,
-    deleteChildren: deleteChildren
+    deleteChildren: deleteChildren,
+    isItTrueChoice: isItTrueChoice
   };
 })();

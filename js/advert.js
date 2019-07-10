@@ -52,11 +52,11 @@
       deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
 
       var copyData = adverts.slice();
-      console.log(copyData);
       var newData = copyData.filter(function(item) {
-        var isHouseType = Boolean(item.offer.type === houseType.options[houseType.options.selectedIndex].value || houseType.options[houseType.options.selectedIndex].value === 'any');
-        var isGuestNumber = Boolean(String(item.offer.guests) === housingGuests.options[housingGuests.options.selectedIndex].value || housingGuests.options[housingGuests.options.selectedIndex].value === 'any');
-        var isRoomNumber = Boolean(String(item.offer.rooms) === housingRooms.options[housingRooms.options.selectedIndex].value || housingRooms.options[housingRooms.options.selectedIndex].value === 'any');
+        var isHouseType = deps.isItTrueChoice(item.offer.type, houseType);
+        var isGuestNumber = deps.isItTrueChoice(item.offer.guests, housingGuests);
+        var isRoomNumber = deps.isItTrueChoice(item.offer.rooms, housingRooms);
+
         var housingPriceType = '';
         if (item.offer.price < 10000) {
           housingPriceType = 'low';
@@ -65,15 +65,13 @@
         } else if (item.offer.price >= 50000) {
           housingPriceType = 'high';
         };
-        var isHousingPriceType = Boolean(housingPriceType === housingPrice.options[housingPrice.options.selectedIndex].value || housingPrice.options[housingPrice.options.selectedIndex].value === 'any');
-
+        var isHousingPriceType = deps.isItTrueChoice(housingPriceType, housingPrice);
         // features in house
         var houseFeatures = Array.from(filtersForm.querySelectorAll('.map__checkbox:checked'));
         var houseFeaturesValues = [];
         houseFeatures.forEach(function(item) {
           houseFeaturesValues.push(item.value);
         });
-        console.log(houseFeaturesValues); // выводится в консоль несколько раз?
         var isContain = function (allegedParentArray, allegedChildArray) {
           for (var i = 0; i < allegedChildArray.length; i++) {
             if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
@@ -86,7 +84,6 @@
 
       })
       .slice(0, 5);
-      console.log(newData);
       deps.insertItems(newData, deps.renderPin, similarListElement);
     });
 
@@ -135,6 +132,7 @@
 })({
   insertItems: window.utils.insertItems,
   renderPin: window.utils.renderPin,
-  deleteChildren: window.utils.deleteChildren
+  deleteChildren: window.utils.deleteChildren,
+  isItTrueChoice: window.utils.isItTrueChoice
 });
 
