@@ -6,6 +6,17 @@
   var housingGuests = filtersForm.querySelector('#housing-guests');
   var housingRooms = filtersForm.querySelector('#housing-rooms');
   var housingPrice = filtersForm.querySelector('#housing-price');
+  var getPriceType = function (price) {
+    var priceType = '';
+    if (price < 10000) {
+      priceType = 'low';
+    } else if (price >= 10000 && price < 50000) {
+      priceType = 'middle';
+    } else if (price >= 50000) {
+      priceType = 'high';
+    };
+    return priceType;
+  };
 
   var filterAds = function (allAdvers) {
     return allAdvers.filter(function(item) {
@@ -13,15 +24,7 @@
       var isGuestNumber = deps.isItTrueChoice(item.offer.guests, housingGuests);
       var isRoomNumber = deps.isItTrueChoice(item.offer.rooms, housingRooms);
 
-      var housingPriceType = '';
-      var housingPriceType = '';
-      if (item.offer.price < 10000) {
-        housingPriceType = 'low';
-      } else if (item.offer.price >= 10000 && item.offer.price < 50000) {
-        housingPriceType = 'middle';
-      } else if (item.offer.price >= 50000) {
-        housingPriceType = 'high';
-      };
+      var housingPriceType = getPriceType(item.offer.price);
       var isHousingPriceType = deps.isItTrueChoice(housingPriceType, housingPrice);
 
       var isFeature = function () {
