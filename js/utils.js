@@ -22,7 +22,7 @@
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < items.length; i++) {
       fragment.appendChild(renderItem(items[i]));
-    }
+    };
     target.appendChild(fragment);
   };
 
@@ -50,7 +50,7 @@
     var pin = similarPin.cloneNode(true);
     var pinImage = pin.querySelector('img');
 
-    pin.setAttribute('style', 'left: ' + (pinData.location.x + pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
+    pin.setAttribute('style', 'left: ' + (pinData.location.x - pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
     pinImage.setAttribute('src', pinData.author.avatar);
     pinImage.setAttribute('alt', pinData.offer.type);
 
@@ -66,7 +66,27 @@
     return pinSizes;
   };
 
+  var deleteChildren = function (parentElement, childClassName, exceptionClassName) {
+    Array.from(parentElement.children).forEach(function (element) {
+      if (element.className !== exceptionClassName && element.className === childClassName) {
+        element.remove();
+      }
+    });
+  };
+
+  var isItTrueChoice = function (dataValue, selectList) {
+    var selectedValue = selectList.options[selectList.options.selectedIndex].value;
+    return Boolean(String(dataValue) === selectedValue || selectedValue === 'any');
+  };
+
   var pinSizes = getPinSize(similarPin, similarListElement);
+
+  var isContain = function (allegedParentArray, allegedChildArray) {
+    for (var i = 0; i < allegedChildArray.length; i++) {
+      if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
+    }
+    return true;
+  };
 
   window.utils = {
     chooseRandomElement: chooseRandomElement,
@@ -75,6 +95,9 @@
     disableElements: disableElements,
     activationElements: activationElements,
     getElementСoordinate: getElementСoordinate,
-    renderPin: renderPin
+    renderPin: renderPin,
+    deleteChildren: deleteChildren,
+    isItTrueChoice: isItTrueChoice,
+    isContain: isContain
   };
 })();

@@ -10,6 +10,7 @@
   var mapInputs = mapFilters.querySelectorAll('input');
   var mapSelects = mapFilters.querySelectorAll('select');
   var descriptionField = [form.querySelector('#description')];
+  var buttomSubmit = form.querySelector('.ad-form__submit');
 
   window.main = {
     variables: {
@@ -122,6 +123,38 @@
 
   });
 
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    buttomSubmit.setAttribute('disabled', 'disabled');
+    deps.uploadForm(new FormData(form), function () {
+      var similarSuccessPopup = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+      var successPopup = similarSuccessPopup.cloneNode(true);
+      map.appendChild(successPopup);
+      var closeSuccessPopup = function () { // временный код
+        map.removeChild(successPopup);
+        document.removeEventListener('keydown', onDocumentEscPress);
+        document.removeEventListener('click', onDocumentClick);
+      };
+      var onDocumentEscPress = function (evtPress) {
+        if (evtPress.keyCode === deps.keyCode.ESC) {
+          closeSuccessPopup();
+        }
+      };
+
+      var onDocumentClick = function () {
+        closeSuccessPopup();
+      };
+
+      document.addEventListener('keydown', onDocumentEscPress);
+      document.addEventListener('click', onDocumentClick);
+      buttomSubmit.removeAttribute('disabled', 'disabled');
+    });
+  });
+
+
 })({
   disableElements: window.utils.disableElements,
   activationElements: window.utils.activationElements,
@@ -129,5 +162,8 @@
   measureElement: window.utils.measureElement,
   getElementСoordinate: window.utils.getElementСoordinate,
   success: window.advert.success,
-  error: window.advert.error
+  keyCode: window.advert.keyCode,
+  error: window.advert.error,
+  uploadForm: window.uploadForm
+
 });
