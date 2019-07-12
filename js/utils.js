@@ -22,7 +22,7 @@
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < items.length; i++) {
       fragment.appendChild(renderItem(items[i]));
-    };
+    }
     target.appendChild(fragment);
   };
 
@@ -83,7 +83,9 @@
 
   var isContain = function (allegedParentArray, allegedChildArray) {
     for (var i = 0; i < allegedChildArray.length; i++) {
-      if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) return false;
+      if (allegedParentArray.indexOf(allegedChildArray[i]) === -1) {
+        return false;
+      }
     }
     return true;
   };
