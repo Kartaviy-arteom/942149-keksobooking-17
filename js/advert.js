@@ -24,13 +24,14 @@
 
       try {
         if (xhr.status === 200) {
-        onSuccess(JSON.parse(xhr.responseText));
+          onSuccess(JSON.parse(xhr.responseText));
 
         } else {
-        onError()};
+          onError();
+        };
 
       } catch (err) {
-          alert('ALERT! RED CODE!');
+          console.error(err.message);
         };
     });
   };
@@ -40,7 +41,7 @@
   };
 
   var success = function (adverts) {
-    adverts.filter(function(advert) {
+    adverts.filter(function (advert) {
       return advert.offer;
     });/**/
     var data = adverts.slice();
