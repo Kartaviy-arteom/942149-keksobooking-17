@@ -22,16 +22,16 @@
     xhr.send();
     xhr.addEventListener('load', function () {
 
-    /*  try {*/
+      try {
         if (xhr.status === 200) {
         onSuccess(JSON.parse(xhr.responseText));
 
         } else {
         onError()};
-/*
+
       } catch (err) {
           alert('ALERT! RED CODE!');
-        };*/
+        };
     });
   };
 
