@@ -29,8 +29,8 @@
 
       var isFeature = function () {
         var houseFeatures = Array.from(filtersForm.querySelectorAll('.map__checkbox:checked'));
-        var houseFeaturesValues = houseFeatures.map(function (item) {
-          return item.value;
+        var houseFeaturesValues = houseFeatures.map(function (element) {
+          return element.value;
         });
         return deps.isContain(item.offer.features, houseFeaturesValues);
       };
