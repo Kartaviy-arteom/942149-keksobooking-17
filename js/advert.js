@@ -28,11 +28,11 @@
 
         } else {
           onError();
-        };
+        }
 
       } catch (err) {
-          console.error(err.message);
-        };
+        onError();
+      }
     });
   };
 
