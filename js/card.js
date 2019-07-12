@@ -39,7 +39,7 @@
     var offerFeatures = (advert.offer.features).map(function (element) {
       return 'popup__feature popup__feature--' + element;
     });
-    Array.from(featuresList.children).forEach(function(element) {
+    Array.from(featuresList.children).forEach(function (element) {
       if (offerFeatures.indexOf(element.className) === -1) {
         element.remove();
       }
@@ -52,7 +52,7 @@
       housePhoto.setAttribute('src', element);
       housePhotoList.appendChild(housePhoto);
     });
-    housePhotoList.children[0].remove ();
+    housePhotoList.children[0].remove();
 
     fragment.appendChild(card);
     map.appendChild(fragment);
