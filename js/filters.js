@@ -14,12 +14,12 @@
       priceType = 'middle';
     } else if (price >= 50000) {
       priceType = 'high';
-    };
+    }
     return priceType;
   };
 
   var filterAds = function (allAdvers) {
-    return allAdvers.filter(function(item) {
+    return allAdvers.filter(function (item) {
       var isHouseType = deps.isItTrueChoice(item.offer.type, houseType);
       var isGuestNumber = deps.isItTrueChoice(item.offer.guests, housingGuests);
       var isRoomNumber = deps.isItTrueChoice(item.offer.rooms, housingRooms);
@@ -29,7 +29,7 @@
 
       var isFeature = function () {
         var houseFeatures = Array.from(filtersForm.querySelectorAll('.map__checkbox:checked'));
-        var houseFeaturesValues = houseFeatures.map(function(item) {
+        var houseFeaturesValues = houseFeatures.map(function (item) {
           return item.value;
         });
         return deps.isContain(item.offer.features, houseFeaturesValues);
@@ -39,7 +39,7 @@
   };
 
   window.filters = {
-    filterAds:  filterAds
+    filterAds: filterAds
   };
 })({
   isItTrueChoice: window.utils.isItTrueChoice,

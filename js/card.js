@@ -52,7 +52,7 @@
       housePhoto.setAttribute('src', element);
       housePhotoList.appendChild(housePhoto);
     });
-    housePhotoList.children[0].remove();
+    housePhotoList.children[0].remove ();
 
     fragment.appendChild(card);
     map.appendChild(fragment);
@@ -62,4 +62,4 @@
     renderCard: renderCard
   };
 
- })();
+})();
