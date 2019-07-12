@@ -21,10 +21,8 @@
   var insertItems = function (items, renderItem, target) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < items.length; i++) {
-      if (items[i].offer) {
-        fragment.appendChild(renderItem(items[i]));
-      }
-    }
+      fragment.appendChild(renderItem(items[i]));
+    };
     target.appendChild(fragment);
   };
 

@@ -22,16 +22,16 @@
     xhr.send();
     xhr.addEventListener('load', function () {
 
-      try {
+    /*  try {*/
         if (xhr.status === 200) {
         onSuccess(JSON.parse(xhr.responseText));
 
         } else {
         onError()};
-
+/*
       } catch (err) {
           alert('ALERT! RED CODE!');
-        };
+        };*/
     });
   };
 
@@ -40,8 +40,12 @@
   };
 
   var success = function (adverts) {
+    adverts.filter(function(advert) {
+      return advert.offer;
+    });/**/
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
+    deps.renderCard(data[0]);
 
     var lastTimeout;
     filtersForm.addEventListener('change', function () {
@@ -103,6 +107,7 @@
   deleteChildren: window.utils.deleteChildren,
   isItTrueChoice: window.utils.isItTrueChoice,
   isContain: window.utils.isContain,
-  filterAds: window.filters.filterAds
+  filterAds: window.filters.filterAds,
+  renderCard: window.card.renderCard
 });
 
