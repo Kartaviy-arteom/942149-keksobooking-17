@@ -34,7 +34,7 @@
       price.textContent = advert.offer.price + '₽/ночь';
       type.textContent = houseToAnotherHouse[advert.offer.type];
       cardCapacity.textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей'; // если одна комната и один гость
-      time.textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + 'advert.offer.checkout';
+      time.textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
 
       var offerFeatures = (advert.offer.features).map(function (element) {
         return 'popup__feature popup__feature--' + element;
