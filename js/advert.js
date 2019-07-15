@@ -31,6 +31,7 @@
         }
 
       } catch (err) {
+        console.log(err);
         onError();
       }
     });
@@ -43,10 +44,27 @@
   var success = function (adverts) {
     adverts.filter(function (advert) {
       return advert.offer;
-    });/**/
+    });
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
-    deps.renderCard(data[0]);
+
+    var map = document.querySelector('.map__pins');
+
+
+    var addHandler = function (pinData) {
+      var pins = map.querySelectorAll('.map__pin');
+      pins.forEach(function(element) {
+        var onPinClick = function () {
+          deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
+        };
+        if (element.className !== 'map__pin map__pin--main') {
+          element.addEventListener('click', onPinClick);
+        }
+      });
+    };
+
+    addHandler(data);
+    //
 
     var lastTimeout;
     filtersForm.addEventListener('change', function () {
@@ -58,6 +76,7 @@
         var copyData = adverts.slice();
         var newData = deps.filterAds(copyData).slice(0, 5);
         deps.insertItems(newData, deps.renderPin, similarListElement);
+        addHandler(newData);
       }, 500);
     });
   };
@@ -109,6 +128,7 @@
   isItTrueChoice: window.utils.isItTrueChoice,
   isContain: window.utils.isContain,
   filterAds: window.filters.filterAds,
-  renderCard: window.card.renderCard
+  renderCard: window.card.renderCard,
+  insertItems: window.utils.insertItems
 });
 

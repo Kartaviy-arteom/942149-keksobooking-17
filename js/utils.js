@@ -21,7 +21,7 @@
   var insertItems = function (items, renderItem, target) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < items.length; i++) {
-      fragment.appendChild(renderItem(items[i]));
+      fragment.appendChild(renderItem(items[i], i));
     }
     target.appendChild(fragment);
   };
@@ -46,13 +46,14 @@
     return coordinate;
   };
 
-  var renderPin = function (pinData) {
+  var renderPin = function (pinData, index) {
     var pin = similarPin.cloneNode(true);
     var pinImage = pin.querySelector('img');
 
     pin.setAttribute('style', 'left: ' + (pinData.location.x - pinSizes.x / 2) + 'px; top: ' + (pinData.location.y - pinSizes.y) + 'px;');
     pinImage.setAttribute('src', pinData.author.avatar);
     pinImage.setAttribute('alt', pinData.offer.type);
+    pin.id = 'house' + index;
 
     return pin;
   };
