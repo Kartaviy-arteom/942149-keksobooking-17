@@ -31,6 +31,7 @@
         }
 
       } catch (err) {
+        console.log(err);
         onError();
       }
     });
@@ -43,10 +44,13 @@
   var success = function (adverts) {
     adverts.filter(function (advert) {
       return advert.offer;
-    });/**/
+    });
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
-    deps.renderCard(data[0]);
+    // временный код
+    var map = document.querySelector('.map__pins');
+    deps.insertItems([data[5]], deps.renderCard, map);
+    //
 
     var lastTimeout;
     filtersForm.addEventListener('change', function () {
@@ -109,6 +113,7 @@
   isItTrueChoice: window.utils.isItTrueChoice,
   isContain: window.utils.isContain,
   filterAds: window.filters.filterAds,
-  renderCard: window.card.renderCard
+  renderCard: window.card.renderCard,
+  insertItems: window.utils.insertItems
 });
 
