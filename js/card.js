@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function (deps) {
   var similarCard = document.querySelector('#card')
     .content
     .querySelector('.map__card');
@@ -58,8 +58,11 @@
 
     advert.offer.photos.forEach(function (element) {
       var housePhoto = similarHousePhoto.cloneNode();
+      deps.deleteChildren(cardProperties.housePhotoList, 'popup__photo');
+
       housePhoto.setAttribute('src', element);
       cardProperties.housePhotoList.appendChild(housePhoto);
+      console.log(cardProperties.housePhotoList);
     });
     cardProperties.housePhotoList.children[0].remove();
 
@@ -71,4 +74,6 @@
     renderCard: renderCard
   };
 
-})();
+})({
+  deleteChildren: window.utils.deleteChildren
+});

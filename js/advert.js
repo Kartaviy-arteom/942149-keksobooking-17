@@ -47,9 +47,23 @@
     });
     var data = adverts.slice();
     deps.insertItems(data.slice(0, 5), deps.renderPin, similarListElement);
-    // временный код
+
     var map = document.querySelector('.map__pins');
-    deps.insertItems([data[5]], deps.renderCard, map);
+
+
+    var addHandler = function (pinData) {
+      var pins = map.querySelectorAll('.map__pin');
+      pins.forEach(function(element) {
+        var onPinClick = function () {
+          deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
+        };
+        if (element.className !== 'map__pin map__pin--main') {
+          element.addEventListener('click', onPinClick);
+        }
+      });
+    };
+
+    addHandler(data);
     //
 
     var lastTimeout;
@@ -62,6 +76,7 @@
         var copyData = adverts.slice();
         var newData = deps.filterAds(copyData).slice(0, 5);
         deps.insertItems(newData, deps.renderPin, similarListElement);
+        addHandler(newData);
       }, 500);
     });
   };
