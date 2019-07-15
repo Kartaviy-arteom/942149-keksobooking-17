@@ -19,7 +19,6 @@
     featuresList: card.querySelector('.popup__features'),
     description: card.querySelector('.popup__description'),
     housePhotoList: card.querySelector('.popup__photos'),
-    /*housePhoto: similarHousePhoto.cloneNode()*/
   };
 
 
@@ -56,18 +55,14 @@
 
     cardProperties.description.textContent = advert.offer.description;
 
+    deps.deleteChildren(cardProperties.housePhotoList, 'popup__photo');
     advert.offer.photos.forEach(function (element) {
       var housePhoto = similarHousePhoto.cloneNode();
-      deps.deleteChildren(cardProperties.housePhotoList, 'popup__photo');
-
       housePhoto.setAttribute('src', element);
       cardProperties.housePhotoList.appendChild(housePhoto);
-      console.log(cardProperties.housePhotoList);
     });
-    cardProperties.housePhotoList.children[0].remove();
 
-    fragment.appendChild(card);
-    return fragment;
+    return card;
   };
 
   window.card = {

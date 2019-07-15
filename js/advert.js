@@ -56,6 +56,24 @@
       pins.forEach(function(element) {
         var onPinClick = function () {
           deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
+
+          var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
+          var cardCloseButtom = card.querySelector('.popup__close');
+          var onButtonClick = function () {
+            closePopup();
+          };
+          var onDocumentEscPress = function (evtPress) {
+            if (evtPress.keyCode === KeyCode.ESC) {
+              closePopup();
+            }
+          };
+          var closePopup = function () {
+            card.remove();
+            document.removeEventListener('keydown', onDocumentEscPress);
+            cardCloseButtom.removeEventListener('click', onButtonClick);
+          };
+          document.addEventListener('keydown', onDocumentEscPress);
+          cardCloseButtom.addEventListener('click', onButtonClick);
         };
         if (element.className !== 'map__pin map__pin--main') {
           element.addEventListener('click', onPinClick);
@@ -64,7 +82,6 @@
     };
 
     addHandler(data);
-    //
 
     var lastTimeout;
     filtersForm.addEventListener('change', function () {
