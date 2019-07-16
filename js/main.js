@@ -124,7 +124,7 @@
   });
 
 
-  form.addEventListener('submit', function (evt) {
+  form.addEventListener('submit', function (evt) {  //РАБОТАЕТ ПРИ НЕАКТИВНОЙ КАРТЕ!!! Перенести в функцию активации карты
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
     deps.uploadForm(new FormData(form), function () {
@@ -152,6 +152,16 @@
       document.addEventListener('click', onDocumentClick);
       buttomSubmit.removeAttribute('disabled', 'disabled');
     });
+  });
+
+  form.addEventListener('reset', function(evtReset) { // аналогично
+    evtReset.preventDefault();
+    var title = form.querySelector('#title');
+    title.reset();
+    console.log('туруру');
+    /*var addressFieldValue = addressField.value;
+    form.reset(true);
+    addressField.value = addressFieldValue;*/
   });
 
 
