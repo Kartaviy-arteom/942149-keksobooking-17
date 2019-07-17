@@ -154,16 +154,53 @@
     });
   });
 
+  //Сброс формы
+  var FormElementValue = {
+    HOUSE_TYPE_INDEX: 1,
+    TITLE: '',
+    TIME_IN_INDEX: 0,
+    TIME_OUT_INDEX: 0,
+    ROOM_NUMBER_INDEX: 0,
+    CAPACITY_INDEX: 2,
+    DESCRIPTION: '',
+    PRICE: '',
+    PRICE_PLACEHOLDER: 5000,
+    CHECKBOX: false
+  };
+
+  var FormElement = {
+    title: form.querySelector('#title'),
+    houseType: form.querySelector('#type'),
+    price: form.querySelector('#price'),
+    roomNumber: form.querySelector('#room_number'),
+    capacity: form.querySelector('#capacity'),
+    description: form.querySelector('#description'),
+    timein: form.querySelector('#timein'),
+    timeout: form.querySelector('#timeout'),
+    checkboxes: form.querySelectorAll('input[type="checkbox"]')
+  };
+
+  var resetForm = function () {
+    FormElement.title.value = FormElementValue.TITLE;
+    FormElement.houseType.options.selectedIndex = FormElementValue.HOUSE_TYPE_INDEX;
+    FormElement.price.value = FormElementValue.PRICE;
+    FormElement.price.setAttribute('placeholder', FormElementValue.PRICE_PLACEHOLDER);
+    FormElement.roomNumber.options.selectedIndex = FormElementValue.ROOM_NUMBER_INDEX;
+    FormElement.capacity.options.selectedIndex = FormElementValue.CAPACITY_INDEX;
+    FormElement.description.value = FormElementValue.DESCRIPTION;
+    FormElement.timein.options.selectedIndex = FormElementValue.TIME_IN_INDEX;
+    FormElement.timeout.options.selectedIndex = FormElementValue.TIME_OUT_INDEX;
+    FormElement.checkboxes.forEach(function (element) {
+      element.checked = FormElementValue.CHECKBOX;
+    });
+  };
+
   form.addEventListener('reset', function(evtReset) { // аналогично
     evtReset.preventDefault();
-    var title = form.querySelector('#title');
-    title.reset();
-    console.log('туруру');
-    /*var addressFieldValue = addressField.value;
-    form.reset(true);
-    addressField.value = addressFieldValue;*/
+    resetForm();
   });
 
+  //
 
 })({
   disableElements: window.utils.disableElements,
