@@ -11,6 +11,7 @@
   var mapSelects = mapFilters.querySelectorAll('select');
   var descriptionField = [form.querySelector('#description')];
   var buttomSubmit = form.querySelector('.ad-form__submit');
+  var similarListElement = document.querySelector('.map__pins');
 
   window.main = {
     variables: {
@@ -25,11 +26,13 @@
     deps.disableElements(mapInputs);
     deps.disableElements(mapSelects);
     deps.disableElements(descriptionField);
+    if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
+    if (!form.classList.contains('ad-form--disabled')) {form.classList.add('ad-form--disabled')};
   };
   deactivateMap();
 
   var mainPin = map.querySelector('.map__pin--main');
-  var activeMap = function () {
+  var activeMap = function () {  // наименование деактивация карты? Нужно ли разбить на две функции?
     deps.activationElements(formInputs);
     deps.activationElements(formSelects);
     deps.activationElements(mapInputs);
@@ -152,6 +155,11 @@
       document.addEventListener('click', onDocumentClick);
       buttomSubmit.removeAttribute('disabled', 'disabled');
     });
+    returnMainPin(mainPinCoordinate, mainPinSizes);
+    insertCoordinate(mainPinCoordinate);
+    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+    deactivateMap();
+    activated = false;
   });
 
   //Сброс формы
@@ -200,7 +208,10 @@
     resetForm();
   });
 
-  //
+  //возращение главного пина ... используется совместно с insertCoordinate(mainPinCoordinate);
+  var returnMainPin = function (startCoords, pinSizes) {
+    mainPin.setAttribute('style', 'left: ' + Math.ceil(startCoords.left - pinSizes.x / 2) + 'px; top: ' + Math.ceil(startCoords.top - pinSizes.y / 2) + 'px;');
+  };
 
 })({
   disableElements: window.utils.disableElements,
@@ -211,6 +222,7 @@
   success: window.advert.success,
   keyCode: window.advert.keyCode,
   error: window.advert.error,
-  uploadForm: window.uploadForm
+  uploadForm: window.uploadForm,
+  deleteChildren: window.utils.deleteChildren
 
 });
