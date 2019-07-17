@@ -137,8 +137,8 @@
       var successPopup = similarSuccessPopup.cloneNode(true);
       map.appendChild(successPopup);
       var closeSuccessPopup = function () { // временный код
-        map.removeChild(successPopup);
-        document.removeEventListener('keydown', onDocumentEscPress);
+        successPopup.remove();
+        document.removeEventListener('keydown', onDocumentEscPress); // keydown на документе
         document.removeEventListener('click', onDocumentClick);
       };
       var onDocumentEscPress = function (evtPress) {
@@ -154,12 +154,18 @@
       document.addEventListener('keydown', onDocumentEscPress);
       document.addEventListener('click', onDocumentClick);
       buttomSubmit.removeAttribute('disabled', 'disabled');
-    });
-    returnMainPin(mainPinCoordinate, mainPinSizes);
-    insertCoordinate(mainPinCoordinate);
-    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-    deactivateMap();
-    activated = false;
+/////////
+      resetForm();
+       returnMainPin(mainPinCoordinate, mainPinSizes);
+      insertCoordinate(mainPinCoordinate);
+      deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+      deactivateMap();
+      activated = false;
+      var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
+      if (card) {card.remove();}; // убираю ошибку когда карты нет
+    }, deps.error); // убирать buttomSubmit.removeAttribute('disabled', 'disabled'); при неудачном исходе тоже
+    //
+
   });
 
   //Сброс формы
