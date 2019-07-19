@@ -22,8 +22,6 @@
 
   var deactivatePage = function () {
     deps.deactivateForm();
-    deps.disableElements(mapInputs);
-    deps.disableElements(mapSelects);
     if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
 
   };
@@ -32,8 +30,6 @@
   var mainPin = map.querySelector('.map__pin--main');
   var activeMap = function () {  // наименование деактивация карты? Нужно ли разбить на две функции?
     deps.activateForm();
-    deps.activationElements(mapInputs);
-    deps.activationElements(mapSelects);
     map.classList.remove('map--faded');
     deps.load(deps.success, deps.error);
   };
@@ -50,7 +46,7 @@
 
   var GAP_PIN_Y = 53;
 
-  var activated = false;
+  var isActivated = false;
   var restrictMovement = function () {
     var rectangle = {
       bottom: 630,
@@ -89,9 +85,9 @@
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-      if (!activated) {
+      if (!isActivated) {
         activeMap();
-        activated = true;
+        isActivated = true;
       }
       var shift = {
         x: startСoordinates.x - moveEvt.clientX,
@@ -155,7 +151,7 @@
       insertCoordinate(mainPinCoordinate);
       deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
       deactivatePage();
-      activated = false;
+      isActivated = false;
       var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
       if (card) {card.remove();}; // убираю ошибку когда карты нет
     }, deps.error); // убирать buttomSubmit.removeAttribute('disabled', 'disabled'); при неудачном исходе тоже
