@@ -9,7 +9,7 @@
   var mapFilters = map.querySelector('.map__filters');
   var mapInputs = mapFilters.querySelectorAll('input');
   var mapSelects = mapFilters.querySelectorAll('select');
-  var descriptionField = [form.querySelector('#description')];
+  var descriptionField = form.querySelector('#description');
   var buttomSubmit = form.querySelector('.ad-form__submit');
   var similarListElement = document.querySelector('.map__pins');
 
@@ -20,26 +20,21 @@
     },
   };
 
-  var deactivateMap = function () {
-    deps.disableElements(formInputs);
-    deps.disableElements(formSelects);
+  var deactivatePage = function () {
+    deps.deactivateForm();
     deps.disableElements(mapInputs);
     deps.disableElements(mapSelects);
-    deps.disableElements(descriptionField);
     if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
-    if (!form.classList.contains('ad-form--disabled')) {form.classList.add('ad-form--disabled')};
+
   };
-  deactivateMap();
+  deactivatePage();
 
   var mainPin = map.querySelector('.map__pin--main');
   var activeMap = function () {  // наименование деактивация карты? Нужно ли разбить на две функции?
-    deps.activationElements(formInputs);
-    deps.activationElements(formSelects);
+    deps.activateForm();
     deps.activationElements(mapInputs);
     deps.activationElements(mapSelects);
-    deps.activationElements(descriptionField);
     map.classList.remove('map--faded');
-    form.classList.remove('ad-form--disabled');
     deps.load(deps.success, deps.error);
   };
 
@@ -159,7 +154,7 @@
        returnMainPin(mainPinCoordinate, mainPinSizes);
       insertCoordinate(mainPinCoordinate);
       deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-      deactivateMap();
+      deactivatePage();
       activated = false;
       var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
       if (card) {card.remove();}; // убираю ошибку когда карты нет
@@ -167,23 +162,6 @@
     //
 
   });
-
-  //Сброс формы
-
-  var onResetBtnClick = function (evt) {
-    evt.preventDefault();
-    resetForm();
-  };
-
-  var resetBtn = form.querySelector('.ad-form__reset');
-  resetBtn.addEventListener('click', onResetBtnClick);
-
-
-  var resetForm = function () {
-    var currentAddress = addressField.value;
-    form.reset();
-    addressField.value = currentAddress;
-  };
 
   //возращение главного пина ... используется совместно с insertCoordinate(mainPinCoordinate);
   var returnMainPin = function (startCoords, pinSizes) {
@@ -200,6 +178,8 @@
   keyCode: window.advert.keyCode,
   error: window.advert.error,
   uploadForm: window.uploadForm,
-  deleteChildren: window.utils.deleteChildren
+  deleteChildren: window.utils.deleteChildren,
+  deactivateForm: window.form.deactivateForm,
+  activateForm: window.form.activateForm
 
 });

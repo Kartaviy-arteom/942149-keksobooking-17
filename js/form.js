@@ -1,5 +1,6 @@
 'use strict';
 (function (deps) {
+  var PRICE_HOUSE_PLACEHOLDER = 5000;
   var form = document.querySelector('.ad-form');
   var houseType = form.querySelector('#type');
   var priceHouse = form.querySelector('#price');
@@ -7,6 +8,12 @@
   var checkOutTime = form.querySelector('#timeout');
   var roomNumber = form.querySelector('#room_number');
   var capacity = form.querySelector('#capacity');
+  var formInputs = form.querySelectorAll('input');
+  var formSelects = form.querySelectorAll('select');
+  var formButtons = form.querySelectorAll('button');
+  var descriptionField = form.querySelector('#description');
+  var addressField = form.querySelector('#address');
+  var resetBtn = form.querySelector('.ad-form__reset');
 
   var onHouseTypeChange = function () {
     var houseToMinPrice = {
@@ -48,11 +55,17 @@
     }
   };
 
-  changeCapacity();
-  checkInTime.addEventListener('change', onCheckInTimeChange);
-  checkOutTime.addEventListener('change', onCheckOutTimeChange);
-  houseType.addEventListener('change', onHouseTypeChange);
-  roomNumber.addEventListener('change', changeCapacity);
+  var onResetBtnClick = function (evt) {
+    evt.preventDefault();
+    resetForm();
+  };
+
+  var resetForm = function () {
+    var currentAddress = addressField.value;
+    form.reset();
+    addressField.value = currentAddress;
+    priceHouse.setAttribute('placeholder', PRICE_HOUSE_PLACEHOLDER);
+  };
 
   var addValidation = function () {
     changeCapacity();
@@ -67,6 +80,33 @@
     checkOutTime.removeEventListener('change', onCheckOutTimeChange);
     houseType.removeEventListener('change', onHouseTypeChange);
     roomNumber.removeEventListener('change', changeCapacity);
+  };
+
+  var deactivateForm = function () {
+    deps.disableElements(formInputs);
+    deps.disableElements(formSelects);
+    deps.disableElements(formButtons);
+    deps.disableElements([descriptionField]);
+    if (!form.classList.contains('ad-form--disabled')) {
+      form.classList.add('ad-form--disabled');
+    };
+    removeValidation();
+    resetBtn.removeEventListener('click', onResetBtnClick);
+  };
+
+  var activateForm = function () {
+    form.classList.remove('ad-form--disabled');
+    deps.activationElements(formInputs);
+    deps.activationElements(formSelects);
+    deps.activationElements(formButtons);
+    deps.activationElements([descriptionField]);
+    addValidation();
+    resetBtn.addEventListener('click', onResetBtnClick);
+  }
+
+  window.form = {
+    activateForm: activateForm,
+    deactivateForm: deactivateForm
   };
 })({
   disableElements: window.utils.disableElements,
