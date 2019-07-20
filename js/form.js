@@ -55,6 +55,12 @@
     }
   };
 
+  var insertCoordinate = function (coordinate) {
+    addressField.value = coordinate.left + ', ' + coordinate.top;
+  };
+
+  insertCoordinate(deps.startMainPinCoord);
+
   var onResetBtnClick = function (evt) {
     evt.preventDefault();
     resetForm();
@@ -106,9 +112,11 @@
 
   window.form = {
     activateForm: activateForm,
-    deactivateForm: deactivateForm
+    deactivateForm: deactivateForm,
+    insertCoordinate: insertCoordinate
   };
 })({
   disableElements: window.utils.disableElements,
-  activationElements: window.utils.activationElements
+  activationElements: window.utils.activationElements,
+  startMainPinCoord: window.mainPin.startMainPinCoord
 });
