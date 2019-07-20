@@ -4,9 +4,6 @@
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
   var form = document.querySelector('.ad-form');
-  var formInputs = form.querySelectorAll('input');
-  var formSelects = form.querySelectorAll('select');
-  var descriptionField = form.querySelector('#description');
   var buttomSubmit = form.querySelector('.ad-form__submit');
   var similarListElement = document.querySelector('.map__pins');
 
