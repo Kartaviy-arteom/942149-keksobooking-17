@@ -18,7 +18,7 @@
   var activeMap = function () {
     deps.activateForm();
     map.classList.remove('map--faded');
-    deps.load(deps.success, deps.error);
+    deps.load(deps.success, deps.showErrorPopup);
   };
 
   var isActivated = false;
@@ -66,7 +66,7 @@
       isActivated = false;
       var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
       if (card) {card.remove();}; // убираю ошибку когда карты нет
-    }, deps.error); // убирать buttomSubmit.removeAttribute('disabled', 'disabled'); при неудачном исходе тоже
+    }, deps.showErrorPopup); // убирать buttomSubmit.removeAttribute('disabled', 'disabled'); при неудачном исходе тоже
     //
 
   });
@@ -86,13 +86,13 @@
   success: window.advert.success,
   keyCode: window.advert.keyCode,
   error: window.advert.error,
-/*  uploadForm: window.uploadForm,*/
   deleteChildren: window.utils.deleteChildren,
   deactivateForm: window.form.deactivateForm,
   activateForm: window.form.activateForm,
   initMainPinMovement: window.mainPin.initMainPinMovement,
   getСurrentPinCoordinate: window.mainPin.getСurrentPinCoordinate,
   insertCoordinate: window.form.insertCoordinate,
-  returnMainPin: window.mainPin.returnMainPin
+  returnMainPin: window.mainPin.returnMainPin,
+  showErrorPopup: window.utils.showErrorPopup
 
 });

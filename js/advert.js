@@ -10,9 +10,9 @@
   var main = document.querySelector('main');
 
   var similarListElement = document.querySelector('.map__pins');
-  var similarErrorPopup = document.querySelector('#error')
+  /*var similarErrorPopup = document.querySelector('#error')
     .content
-    .querySelector('.error');
+    .querySelector('.error');*/
 
 
   // var load = function (onSuccess, onError) {
@@ -38,7 +38,7 @@
   // };
 
   var repeatLoad = function () {
-    load(success, error);
+    load(success, deps.showErrorPopup);
   };
 
   var success = function (adverts) {
@@ -99,7 +99,7 @@
   };
 
 
-  var error = function () {
+  /*var error = function () {
     var errorPopup = similarErrorPopup.cloneNode(true);
 
     main.appendChild(errorPopup);
@@ -129,7 +129,7 @@
     document.addEventListener('keydown', onDocumentEscPress);
     document.addEventListener('click', onDocumentClick);
 
-  };
+  };*/
 
   window.advert = {
 
@@ -146,6 +146,7 @@
   isContain: window.utils.isContain,
   filterAds: window.filters.filterAds,
   renderCard: window.card.renderCard,
-  insertItems: window.utils.insertItems
+  insertItems: window.utils.insertItems,
+  showErrorPopup: window.utils.showErrorPopup
 });
 

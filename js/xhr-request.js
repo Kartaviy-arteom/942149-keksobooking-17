@@ -3,7 +3,7 @@
 (function () {
   var GetRequestParameter = {
     METHOD: 'GET',
-    URL: 'https://js.dump.academy/keksobooking/data',
+    URL: 'https://js.dump.academy/keksobooking/dta',
   };
 
   var PostRequestParameter = {

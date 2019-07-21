@@ -1,10 +1,21 @@
 'use strict';
 
 (function () {
+  var KeyCode = {
+    ESC: 27,
+    ENTER: 13
+  };
+  var main = document.querySelector('main');
   var similarListElement = document.querySelector('.map__pins');
   var similarPin = document.querySelector('#pin')
     .content
     .querySelector('.map__pin');
+  var similarErrorPopup = document.querySelector('#error')
+    .content
+    .querySelector('.error');
+  var similarSuccessPopup = document.querySelector('#success')
+      .content
+      .querySelector('.success');
   var chooseRandomElement = function (arr) {
     var randomElement = arr[Math.floor(Math.random() * arr.length)];
     return randomElement;
@@ -91,6 +102,34 @@
     return true;
   };
 
+  var showPopup = function (similarPopup, someFunction) {
+    var Popup = similarPopup.cloneNode(true);
+    main.appendChild(Popup);
+
+    var closePopup = function () {
+      main.removeChild(Popup);
+      document.removeEventListener('keydown', onDocumentKeydown);
+      document.removeEventListener('click', onDocumentClick);
+    };
+
+    var onDocumentKeydown = function (evt) {
+      if (evt.keyCode === KeyCode.ESC) {
+        closePopup();
+      }
+    };
+
+    var onDocumentClick = function () {
+      closeError();
+    };
+    someFunction();
+
+    document.addEventListener('keydown', onDocumentKeydown);
+    document.addEventListener('click', onDocumentClick);
+  };
+
+  var showErrorPopup = showPopup(similarErrorPopup);
+  var showSuccessPopup = showPopup(similarSuccessPopup);
+
   window.utils = {
     chooseRandomElement: chooseRandomElement,
     measureElement: measureElement,
@@ -101,6 +140,7 @@
     renderPin: renderPin,
     deleteChildren: deleteChildren,
     isItTrueChoice: isItTrueChoice,
-    isContain: isContain
+    isContain: isContain,
+    showErrorPopup: showErrorPopup
   };
 })();
