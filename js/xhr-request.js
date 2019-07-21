@@ -35,7 +35,7 @@
   var load = function (onSuccess, onError) {
     xhrRequest(GetRequestParameter, onSuccess, onError);
   };
-  var upload = function (onSuccess, onError, data) {
+  var upload = function ( data, onSuccess, onError) {
     xhrRequest(PostRequestParameter, onSuccess, onError, data);
   };
 

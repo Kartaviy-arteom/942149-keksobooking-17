@@ -33,7 +33,7 @@
   form.addEventListener('submit', function (evt) {  //РАБОТАЕТ ПРИ НЕАКТИВНОЙ КАРТЕ!!! Перенести в функцию активации карты
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
-    deps.uploadForm(new FormData(form), function () {
+    deps.upload(new FormData(form), function () {
       var similarSuccessPopup = document.querySelector('#success')
       .content
       .querySelector('.success');
@@ -80,12 +80,13 @@
   disableElements: window.utils.disableElements,
   activationElements: window.utils.activationElements,
   load: window.xhrRequest.load,
+  upload: window.xhrRequest.upload,
   measureElement: window.utils.measureElement,
 
   success: window.advert.success,
   keyCode: window.advert.keyCode,
   error: window.advert.error,
-  uploadForm: window.uploadForm,
+/*  uploadForm: window.uploadForm,*/
   deleteChildren: window.utils.deleteChildren,
   deactivateForm: window.form.deactivateForm,
   activateForm: window.form.activateForm,
