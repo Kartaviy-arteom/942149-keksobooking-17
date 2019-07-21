@@ -15,27 +15,27 @@
     .querySelector('.error');
 
 
-  var load = function (onSuccess, onError) {
-    var xhr = new XMLHttpRequest();
+  // var load = function (onSuccess, onError) {
+  //   var xhr = new XMLHttpRequest();
 
-    xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
-    xhr.send();
-    xhr.addEventListener('load', function () {
+  //   xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
+  //   xhr.send();
+  //   xhr.addEventListener('load', function () {
 
-      try {
-        if (xhr.status === 200) {
-          onSuccess(JSON.parse(xhr.responseText));
+  //     try {
+  //       if (xhr.status === 200) {
+  //         onSuccess(JSON.parse(xhr.responseText));
 
-        } else {
-          onError();
-        }
+  //       } else {
+  //         onError();
+  //       }
 
-      } catch (err) {
-        console.log(err);
-        onError();
-      }
-    });
-  };
+  //     } catch (err) {
+  //       console.log(err);
+  //       onError();
+  //     }
+  //   });
+  // };
 
   var repeatLoad = function () {
     load(success, error);
@@ -132,7 +132,7 @@
   };
 
   window.advert = {
-    load: load,
+
     success: success,
     error: error,
     keyCode: KeyCode

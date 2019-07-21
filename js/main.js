@@ -79,7 +79,7 @@
 })({
   disableElements: window.utils.disableElements,
   activationElements: window.utils.activationElements,
-  load: window.advert.load,
+  load: window.xhrRequest.load,
   measureElement: window.utils.measureElement,
 
   success: window.advert.success,
