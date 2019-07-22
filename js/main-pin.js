@@ -6,6 +6,7 @@
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinSizes = deps.measureElement(mainPin);
   var startMainPinCoord = deps.getElementСoordinate(mainPin, mainPinSizes);
+  console.log(startMainPinCoord);
 
   var restrictMovement = function () {
     var rectangle = {
@@ -30,13 +31,13 @@
   };
 
   var initMainPinMovement = function(toggle, activationFunction, someFunction) {
-    mainPin.addEventListener('mousedown', function (evt) {
+    mainPin.addEventListener('mousedown', function (evt, toggle) {
       var startСoordinates = {
         x: evt.clientX,
         y: evt.clientY
       };
 
-      var onMouseMove = function (moveEvt) {
+      var onMouseMove = function (moveEvt, toggle) {
         moveEvt.preventDefault();
 
         var shift = {

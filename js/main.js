@@ -28,64 +28,41 @@
   };
 
   deps.initMainPinMovement(isActivated, activeMap, insertCurentMainPinCoord);
+  console.log(isActivated);
 
+  var onSuccess = function () { //наименование функции, глагол в функции?
+    deps.showSuccessPopup();
+    deps.deactivateForm();
+    deps.returnMainPin();
+    deps.insertCoordinate(deps.startMainPinCoord);
+    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+    deactivatePage();
+    isActivated = false;
+    var card = map.querySelector('.map__card ');
+    if (card) {
+      card.remove();
+    };
+  };
 
-  form.addEventListener('submit', function (evt) {  //РАБОТАЕТ ПРИ НЕАКТИВНОЙ КАРТЕ!!! Перенести в функцию активации карты
+  var onError = function () { //наименование функции, глагол в функции?
+    deps.showErrorPopup();
+    buttomSubmit.removeAttribute('disabled', 'disabled');
+  };
+  form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
-    deps.upload(new FormData(form), function () {
-      var similarSuccessPopup = document.querySelector('#success')
-      .content
-      .querySelector('.success');
-      var successPopup = similarSuccessPopup.cloneNode(true);
-      map.appendChild(successPopup);
-      var closeSuccessPopup = function () { // временный код
-        successPopup.remove();
-        document.removeEventListener('keydown', onDocumentEscPress); // keydown на документе
-        document.removeEventListener('click', onDocumentClick);
-      };
-      var onDocumentEscPress = function (evtPress) {
-        if (evtPress.keyCode === deps.keyCode.ESC) {
-          closeSuccessPopup();
-        }
-      };
 
-      var onDocumentClick = function () {
-        closeSuccessPopup();
-      };
-
-      document.addEventListener('keydown', onDocumentEscPress);
-      document.addEventListener('click', onDocumentClick);
-      buttomSubmit.removeAttribute('disabled', 'disabled');
-/////////
-      deps.deactivateForm();
-      deps.returnMainPin();
-      insertCoordinate(mainPinCoordinate);
-      deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-      deactivatePage();
-      isActivated = false;
-      var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
-      if (card) {card.remove();}; // убираю ошибку когда карты нет
-    }, deps.showErrorPopup); // убирать buttomSubmit.removeAttribute('disabled', 'disabled'); при неудачном исходе тоже
-    //
+    deps.upload(new FormData(form), onSuccess, onError);
 
   });
-
-  //возращение главного пина ... используется совместно с insertCoordinate(mainPinCoordinate);
-  /*var returnMainPin = function (startCoords, pinSizes) {
-    mainPin.setAttribute('style', 'left: ' + Math.ceil(startCoords.left - pinSizes.x / 2) + 'px; top: ' + Math.ceil(startCoords.top - pinSizes.y / 2) + 'px;');
-  };*/
 
 })({
   disableElements: window.utils.disableElements,
   activationElements: window.utils.activationElements,
   load: window.xhrRequest.load,
   upload: window.xhrRequest.upload,
-  measureElement: window.utils.measureElement,
-
   success: window.advert.success,
   keyCode: window.advert.keyCode,
-  error: window.advert.error,
   deleteChildren: window.utils.deleteChildren,
   deactivateForm: window.form.deactivateForm,
   activateForm: window.form.activateForm,
@@ -93,6 +70,7 @@
   getСurrentPinCoordinate: window.mainPin.getСurrentPinCoordinate,
   insertCoordinate: window.form.insertCoordinate,
   returnMainPin: window.mainPin.returnMainPin,
-  showErrorPopup: window.utils.showErrorPopup
-
+  showErrorPopup: window.utils.showErrorPopup,
+  showSuccessPopup: window.utils.showSuccessPopup,
+  startMainPinCoord: window.mainPin.startMainPinCoord
 });

@@ -3,39 +3,12 @@
 (function (deps) {
 
   var KeyCode = {
-    ESC: 27,
-    ENTER: 13
+    ESC: 27
   };
   var filtersForm = document.querySelector('.map__filters');
   var main = document.querySelector('main');
 
   var similarListElement = document.querySelector('.map__pins');
-  /*var similarErrorPopup = document.querySelector('#error')
-    .content
-    .querySelector('.error');*/
-
-
-  // var load = function (onSuccess, onError) {
-  //   var xhr = new XMLHttpRequest();
-
-  //   xhr.open('GET', 'https://js.dump.academy/keksobooking/data');
-  //   xhr.send();
-  //   xhr.addEventListener('load', function () {
-
-  //     try {
-  //       if (xhr.status === 200) {
-  //         onSuccess(JSON.parse(xhr.responseText));
-
-  //       } else {
-  //         onError();
-  //       }
-
-  //     } catch (err) {
-  //       console.log(err);
-  //       onError();
-  //     }
-  //   });
-  // };
 
   var repeatLoad = function () {
     load(success, deps.showErrorPopup);
@@ -57,9 +30,9 @@
         var onPinClick = function () {
           deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
 
-          var card = map.querySelector('.map__card ');// Поиск элемента, нужен ли?
+          var card = map.querySelector('.map__card ');
           var cardCloseButtom = card.querySelector('.popup__close');
-          var onButtonClick = function () {
+          var onCardCloseButtomClick = function () {
             closePopup();
           };
           var onDocumentEscPress = function (evtPress) {
@@ -73,7 +46,7 @@
             cardCloseButtom.removeEventListener('click', onButtonClick);
           };
           document.addEventListener('keydown', onDocumentEscPress);
-          cardCloseButtom.addEventListener('click', onButtonClick);
+          cardCloseButtom.addEventListener('click', onCardCloseButtomClick);
         };
         if (element.className !== 'map__pin map__pin--main') {
           element.addEventListener('click', onPinClick);
@@ -98,55 +71,16 @@
     });
   };
 
-
-  /*var error = function () {
-    var errorPopup = similarErrorPopup.cloneNode(true);
-
-    main.appendChild(errorPopup);
-    var errorButton = main.querySelector('.error__button');
-
-    var closeError = function () {
-      main.removeChild(errorPopup);
-      document.removeEventListener('keydown', onDocumentEscPress);
-      document.removeEventListener('click', onDocumentClick);
-      setTimeout(repeatLoad, 3000);
-    };
-
-    var onDocumentEscPress = function (evt) {
-      if (evt.keyCode === KeyCode.ESC) {
-
-        closeError();
-      }
-    };
-
-
-    var onDocumentClick = function () {
-      closeError();
-    };
-
-    errorButton.addEventListener('click', closeError);
-
-    document.addEventListener('keydown', onDocumentEscPress);
-    document.addEventListener('click', onDocumentClick);
-
-  };*/
-
   window.advert = {
-
     success: success,
-    error: error,
-    keyCode: KeyCode
   };
 
 })({
   insertItems: window.utils.insertItems,
   renderPin: window.utils.renderPin,
   deleteChildren: window.utils.deleteChildren,
-  isItTrueChoice: window.utils.isItTrueChoice,
-  isContain: window.utils.isContain,
   filterAds: window.filters.filterAds,
   renderCard: window.card.renderCard,
-  insertItems: window.utils.insertItems,
   showErrorPopup: window.utils.showErrorPopup
 });
 

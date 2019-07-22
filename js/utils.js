@@ -102,7 +102,7 @@
     return true;
   };
 
-  var showPopup = function (similarPopup, someFunction) {
+  var showPopup = function (similarPopup) {
     var Popup = similarPopup.cloneNode(true);
     main.appendChild(Popup);
 
@@ -119,16 +119,19 @@
     };
 
     var onDocumentClick = function () {
-      closeError();
+      closePopup();
     };
-    someFunction();
 
     document.addEventListener('keydown', onDocumentKeydown);
     document.addEventListener('click', onDocumentClick);
   };
 
-  var showErrorPopup = showPopup(similarErrorPopup);
-  var showSuccessPopup = showPopup(similarSuccessPopup);
+  var showErrorPopup = function () {
+    showPopup(similarErrorPopup);
+  };
+  var showSuccessPopup = function () {
+    showPopup(similarSuccessPopup);
+  };
 
   window.utils = {
     chooseRandomElement: chooseRandomElement,
@@ -141,6 +144,7 @@
     deleteChildren: deleteChildren,
     isItTrueChoice: isItTrueChoice,
     isContain: isContain,
-    showErrorPopup: showErrorPopup
+    showErrorPopup: showErrorPopup,
+    showSuccessPopup: showSuccessPopup
   };
 })();

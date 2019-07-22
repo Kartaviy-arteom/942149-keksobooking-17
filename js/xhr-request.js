@@ -3,7 +3,7 @@
 (function () {
   var GetRequestParameter = {
     METHOD: 'GET',
-    URL: 'https://js.dump.academy/keksobooking/dta',
+    URL: 'https://js.dump.academy/keksobooking/data',
   };
 
   var PostRequestParameter = {
@@ -35,7 +35,7 @@
   var load = function (onSuccess, onError) {
     xhrRequest(GetRequestParameter, onSuccess, onError);
   };
-  var upload = function ( data, onSuccess, onError) {
+  var upload = function (data, onSuccess, onError) {
     xhrRequest(PostRequestParameter, onSuccess, onError, data);
   };
 
