@@ -49,8 +49,10 @@
     });
     Array.from(cardProperties.featuresList.children).forEach(function (element) {
       if (offerFeatures.indexOf(element.className) === -1) {
-        element.remove();
-      }
+        element.setAttribute('style', 'display: none;');
+      } else {
+        element.removeAttribute('style', 'display: none;');
+      };
     });
 
     cardProperties.description.textContent = advert.offer.description;
