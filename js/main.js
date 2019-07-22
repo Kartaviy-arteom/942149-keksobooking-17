@@ -57,8 +57,6 @@
   });
 
 })({
-  disableElements: window.utils.disableElements,
-  activationElements: window.utils.activationElements,
   load: window.xhrRequest.load,
   upload: window.xhrRequest.upload,
   success: window.advert.success,

@@ -43,7 +43,7 @@
           var closePopup = function () {
             card.remove();
             document.removeEventListener('keydown', onDocumentEscPress);
-            cardCloseButtom.removeEventListener('click', onButtonClick);
+            cardCloseButtom.removeEventListener('click', onCardCloseButtomClick);
           };
           document.addEventListener('keydown', onDocumentEscPress);
           cardCloseButtom.addEventListener('click', onCardCloseButtomClick);
