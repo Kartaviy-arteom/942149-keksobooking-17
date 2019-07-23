@@ -16,11 +16,6 @@
   };
   deactivatePage();
 
-  var onResetBtnClick = function (evt) {
-    evt.preventDefault();
-    onSuccess();
-  };
-
   var activePage = function () {
     deps.activateForm();
     map.classList.remove('map--faded');
@@ -64,6 +59,11 @@
     deps.upload(new FormData(form), onSuccess, onError);
 
   });
+
+  var onResetBtnClick = function (evt) {
+    evt.preventDefault();
+    onSuccess();
+  };
 
 })({
   load: window.xhrRequest.load,
