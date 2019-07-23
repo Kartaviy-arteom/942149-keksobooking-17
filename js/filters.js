@@ -38,6 +38,16 @@
     });
   };
 
+  // выбор по enter отписка (для доступности), удалять ли этот обработчик при деактивации страницы? Когда подписываться
+  var housingFeaturesField = filtersForm.querySelector('#housing-features');
+  housingFeaturesField.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 13) {
+      evt.preventDefault();
+      evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
+    };
+  });
+  //
+
   window.filters = {
     filterAds: filterAds
   };

@@ -108,7 +108,17 @@
     deps.activationElements([descriptionField]);
     addValidation();
     resetBtn.addEventListener('click', onResetBtnClick);
-  }
+  };
+
+  // выбор по enter отписка (для доступности), удалять ли этот обработчик при деактивации страницы? Когда подписываться
+  var featuresList = form.querySelector('.features');
+  var onFeaturesListKeydown = function (evt) {
+    if (evt.keyCode === 13) {
+      evt.preventDefault();
+      evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
+    };
+  };
+  featuresList.addEventListener('keydown', onFeaturesListKeydown);
 
   window.form = {
     activateForm: activateForm,

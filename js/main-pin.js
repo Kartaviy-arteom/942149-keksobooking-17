@@ -31,13 +31,13 @@
   };
 
   var initMainPinMovement = function(toggle, activationFunction, someFunction) {
-    mainPin.addEventListener('mousedown', function (evt, toggle) {
+    mainPin.addEventListener('mousedown', function (evt) {
       var startСoordinates = {
         x: evt.clientX,
         y: evt.clientY
       };
 
-      var onMouseMove = function (moveEvt, toggle) {
+      var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
 
         var shift = {
@@ -53,6 +53,7 @@
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
          if (!toggle) {
+          console.log(toggle);
           activationFunction();
           toggle = true;
         }
