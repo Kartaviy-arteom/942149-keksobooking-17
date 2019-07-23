@@ -10,7 +10,7 @@
   var deactivatePage = function () {
     deps.deactivateForm();
     if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
-
+    deps.deactivateFilters();
   };
   deactivatePage();
 
@@ -70,5 +70,6 @@
   returnMainPin: window.mainPin.returnMainPin,
   showErrorPopup: window.utils.showErrorPopup,
   showSuccessPopup: window.utils.showSuccessPopup,
-  startMainPinCoord: window.mainPin.startMainPinCoord
+  startMainPinCoord: window.mainPin.startMainPinCoord,
+  deactivateFilters: window.filters.deactivateFilters
 });

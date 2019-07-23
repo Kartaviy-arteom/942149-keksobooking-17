@@ -15,6 +15,7 @@
   };
 
   var success = function (adverts) {
+    deps.activateFilters();
     adverts.filter(function (advert) {
       return advert.offer;
     });
@@ -81,6 +82,7 @@
   deleteChildren: window.utils.deleteChildren,
   filterAds: window.filters.filterAds,
   renderCard: window.card.renderCard,
-  showErrorPopup: window.utils.showErrorPopup
+  showErrorPopup: window.utils.showErrorPopup,
+  activateFilters: window.filters.activateFilters
 });
 
