@@ -6,19 +6,26 @@
   var form = document.querySelector('.ad-form');
   var buttomSubmit = form.querySelector('.ad-form__submit');
   var similarListElement = document.querySelector('.map__pins');
+  var resetBtn = form.querySelector('.ad-form__reset');
 
   var deactivatePage = function () {
     deps.deactivateForm();
     if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
     deps.deactivateFilters();
+    resetBtn.removeEventListener('click', onResetBtnClick);
   };
   deactivatePage();
 
+  var onResetBtnClick = function (evt) {
+    evt.preventDefault();
+    onSuccess();
+  };
 
-  var activeMap = function () {
+  var activePage = function () {
     deps.activateForm();
     map.classList.remove('map--faded');
     deps.load(deps.success, deps.showErrorPopup);
+    resetBtn.addEventListener('click', onResetBtnClick);
   };
 
   var isActivated = false;
@@ -27,12 +34,10 @@
     deps.insertCoordinate(deps.getСurrentPinCoordinate());
   };
 
-  deps.initMainPinMovement(isActivated, activeMap, insertCurentMainPinCoord);
+  deps.initMainPinMovement(isActivated, activePage, insertCurentMainPinCoord);
   console.log(isActivated);
 
-  var onSuccess = function () { //наименование функции, глагол в функции?
-    deps.showSuccessPopup();
-    deps.deactivateForm();
+  var resetPage = function () {
     deps.returnMainPin();
     deps.insertCoordinate(deps.startMainPinCoord);
     deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
@@ -42,6 +47,10 @@
     if (card) {
       card.remove();
     };
+  };
+  var onSuccess = function () { //наименование функции, глагол в функции?
+    deps.showSuccessPopup();
+    resetPage();
   };
 
   var onError = function () { //наименование функции, глагол в функции?

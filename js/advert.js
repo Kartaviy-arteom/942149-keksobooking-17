@@ -64,6 +64,7 @@
       }
       lastTimeout = window.setTimeout(function () {
         deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+        deps.deleteChildren(similarListElement, 'map__card popup');
         var copyData = adverts.slice();
         var newData = deps.filterAds(copyData).slice(0, 5);
         deps.insertItems(newData, deps.renderPin, similarListElement);

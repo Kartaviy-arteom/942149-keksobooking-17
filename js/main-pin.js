@@ -6,6 +6,7 @@
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinSizes = deps.measureElement(mainPin);
   var startMainPinCoord = deps.getElementСoordinate(mainPin, mainPinSizes);
+  var resetBtn = document.querySelector('.ad-form__reset');
   console.log(startMainPinCoord);
 
   var restrictMovement = function () {

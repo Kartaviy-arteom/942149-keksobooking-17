@@ -1,6 +1,8 @@
 'use strict';
 (function (deps) {
   var PRICE_HOUSE_PLACEHOLDER = 5000;
+  var ORIGINAL_BORDER_STYLE = '1px solid #d9d9d3';
+  var INVALID_BORDER_STYLE = '2px solid red';
   var form = document.querySelector('.ad-form');
   var houseType = form.querySelector('#type');
   var priceHouse = form.querySelector('#price');
@@ -13,7 +15,8 @@
   var formButtons = form.querySelectorAll('button');
   var descriptionField = form.querySelector('#description');
   var addressField = form.querySelector('#address');
-  var resetBtn = form.querySelector('.ad-form__reset');
+  var titleField = form.querySelector('#title');
+  var submitBtn = form.querySelector('.ad-form__submit');
 
   var onHouseTypeChange = function () {
     var houseToMinPrice = {
@@ -61,16 +64,10 @@
 
   insertCoordinate(deps.startMainPinCoord);
 
-  var onResetBtnClick = function (evt) {
-    evt.preventDefault();
-    resetForm();
-  };
-
-  var resetForm = function () {
-    var currentAddress = addressField.value;
-    form.reset();
-    addressField.value = currentAddress;
-    priceHouse.setAttribute('placeholder', PRICE_HOUSE_PLACEHOLDER);
+// Подсветка неправильных форм
+  var onSubmitBtnClick = function () {
+    titleField.validity.valid ? titleField.style.border = ORIGINAL_BORDER_STYLE : titleField.style.border = INVALID_BORDER_STYLE;
+    priceHouse.validity.valid ? priceHouse.style.border = ORIGINAL_BORDER_STYLE : priceHouse.style.border = INVALID_BORDER_STYLE;
   };
 
   var addValidation = function () {
@@ -79,6 +76,7 @@
     checkOutTime.addEventListener('change', onCheckOutTimeChange);
     houseType.addEventListener('change', onHouseTypeChange);
     roomNumber.addEventListener('change', changeCapacity);
+    submitBtn.addEventListener('click', onSubmitBtnClick);
   };
 
   var removeValidation = function () {
@@ -86,6 +84,7 @@
     checkOutTime.removeEventListener('change', onCheckOutTimeChange);
     houseType.removeEventListener('change', onHouseTypeChange);
     roomNumber.removeEventListener('change', changeCapacity);
+    submitBtn.removeEventListener('click', onSubmitBtnClick);
   };
 
   var deactivateForm = function () {
@@ -97,7 +96,7 @@
       form.classList.add('ad-form--disabled');
     };
     removeValidation();
-    resetBtn.removeEventListener('click', onResetBtnClick);
+    featuresList.removeEventListener('keydown', onFeaturesListKeydown);
   };
 
   var activateForm = function () {
@@ -107,7 +106,7 @@
     deps.activationElements(formButtons);
     deps.activationElements([descriptionField]);
     addValidation();
-    resetBtn.addEventListener('click', onResetBtnClick);
+    featuresList.addEventListener('keydown', onFeaturesListKeydown);
   };
 
   // выбор по enter отписка (для доступности), удалять ли этот обработчик при деактивации страницы? Когда подписываться
@@ -118,7 +117,6 @@
       evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
     };
   };
-  featuresList.addEventListener('keydown', onFeaturesListKeydown);
 
   window.form = {
     activateForm: activateForm,
