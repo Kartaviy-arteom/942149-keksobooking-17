@@ -110,7 +110,9 @@
       main.removeChild(Popup);
       document.removeEventListener('keydown', onDocumentKeydown);
       document.removeEventListener('click', onDocumentClick);
-      callback();
+      if (callback) {
+        callback();
+      };
     };
 
     var onDocumentKeydown = function (evt) {

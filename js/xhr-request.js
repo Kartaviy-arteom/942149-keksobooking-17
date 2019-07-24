@@ -12,6 +12,7 @@
   };
   var xhrRequest = function (requestParameter, onSuccess, onError, data) {
     var xhr = new XMLHttpRequest();
+    xhr.ontimeout = function() {alert('tutu');};
 
     xhr.open(requestParameter.METHOD, requestParameter.URL);
     xhr.send(data);

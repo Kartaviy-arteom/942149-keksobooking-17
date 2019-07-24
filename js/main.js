@@ -53,10 +53,10 @@
   deps.initMainPinMovement(onMainPinMove);
 
   var resetPage = function () {
+    deactivatePage();
     deps.returnMainPin();
     deps.insertCoordinate(deps.startMainPinCoord);
     deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
-    deactivatePage();
     isActivated = false;
     var card = map.querySelector('.map__card ');
     if (card) {

@@ -90,6 +90,8 @@
   };
 
   var deactivateForm = function () {
+    form.reset();
+    priceHouse.setAttribute('placeholder', PRICE_HOUSE_PLACEHOLDER);
     deps.disableElements(formInputs);
     deps.disableElements(formSelects);
     deps.disableElements(formButtons);
