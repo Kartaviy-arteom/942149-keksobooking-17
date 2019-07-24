@@ -64,10 +64,12 @@
 
   insertCoordinate(deps.startMainPinCoord);
 
-// Подсветка неправильных форм
+  var checkValidity = function (formElement, validBorderDesign, invalidBorderDesign) {
+    formElement.validity.valid ? formElement.style.border = validBorderDesign : formElement.style.border = invalidBorderDesign;
+  };
   var onSubmitBtnClick = function () {
-    titleField.validity.valid ? titleField.style.border = ORIGINAL_BORDER_STYLE : titleField.style.border = INVALID_BORDER_STYLE;
-    priceHouse.validity.valid ? priceHouse.style.border = ORIGINAL_BORDER_STYLE : priceHouse.style.border = INVALID_BORDER_STYLE;
+    checkValidity (titleField, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
+    checkValidity (priceHouse, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
   };
 
   var addValidation = function () {
@@ -109,7 +111,6 @@
     featuresList.addEventListener('keydown', onFeaturesListKeydown);
   };
 
-  // выбор по enter отписка (для доступности), удалять ли этот обработчик при деактивации страницы? Когда подписываться
   var featuresList = form.querySelector('.features');
   var onFeaturesListKeydown = function (evt) {
     if (evt.keyCode === 13) {

@@ -7,30 +7,50 @@
   var buttomSubmit = form.querySelector('.ad-form__submit');
   var similarListElement = document.querySelector('.map__pins');
   var resetBtn = form.querySelector('.ad-form__reset');
-
-  var deactivatePage = function () {
-    deps.deactivateForm();
-    if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
-    deps.deactivateFilters();
-    resetBtn.removeEventListener('click', onResetBtnClick);
-  };
-  deactivatePage();
-
-  var activePage = function () {
-    deps.activateForm();
-    map.classList.remove('map--faded');
-    deps.load(deps.success, deps.showErrorPopup);
-    resetBtn.addEventListener('click', onResetBtnClick);
-  };
-
   var isActivated = false;
 
   var insertCurentMainPinCoord = function () {
     deps.insertCoordinate(deps.getСurrentPinCoordinate());
   };
 
-  deps.initMainPinMovement(isActivated, activePage, insertCurentMainPinCoord);
-  console.log(isActivated);
+  var onMainPinMove = function () {
+    if (!isActivated) {
+      activePage();
+      isActivated = true;
+    };
+    insertCurentMainPinCoord();
+  };
+
+  var deactivatePage = function () {
+    deps.deactivateForm();
+    if (!map.classList.contains('map--faded')) {map.classList.add('map--faded')};
+    deps.deactivateFilters();
+    resetBtn.removeEventListener('click', onResetBtnClick);
+    deps.activateMainPin(onMainPinMove);
+  };
+  deactivatePage();
+
+  var onLoadSuccess = function (data) {
+    deps.activateFilters();
+    deps.initPins(data);
+  };
+  var onLoadError = function () {
+    deps.showErrorPopup(onLoadErrorBtnClick);
+  };
+  var onLoadErrorBtnClick = function (evt) {
+    evt.preventDefault();
+    deps.load(onLoadSuccess, onLoadError);
+  };
+
+  var activePage = function () {
+    deps.activateForm();
+    map.classList.remove('map--faded');
+    deps.load(onLoadSuccess, onLoadError);
+    resetBtn.addEventListener('click', onResetBtnClick);
+  };
+
+
+  deps.initMainPinMovement(onMainPinMove);
 
   var resetPage = function () {
     deps.returnMainPin();
@@ -43,32 +63,35 @@
       card.remove();
     };
   };
-  var onSuccess = function () { //наименование функции, глагол в функции?
+  var onUploadSuccess = function () {
     deps.showSuccessPopup();
     resetPage();
   };
 
-  var onError = function () { //наименование функции, глагол в функции?
-    deps.showErrorPopup();
+  var onUploadRepeatBtnClick = function (evt) {
+    evt.preventDefault();
+    deps.upload(new FormData(form), onUploadSuccess, onUploadError);
+  };
+  var onUploadError = function () {
+    deps.showErrorPopup(onUploadRepeatBtnClick);
     buttomSubmit.removeAttribute('disabled', 'disabled');
   };
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
-
-    deps.upload(new FormData(form), onSuccess, onError);
+    deps.upload(new FormData(form), onUploadSuccess, onUploadError);
 
   });
 
   var onResetBtnClick = function (evt) {
     evt.preventDefault();
-    onSuccess();
+    resetPage();
   };
 
 })({
   load: window.xhrRequest.load,
   upload: window.xhrRequest.upload,
-  success: window.advert.success,
+  initPins: window.advert.initPins,
   keyCode: window.advert.keyCode,
   deleteChildren: window.utils.deleteChildren,
   deactivateForm: window.form.deactivateForm,
@@ -80,5 +103,7 @@
   showErrorPopup: window.utils.showErrorPopup,
   showSuccessPopup: window.utils.showSuccessPopup,
   startMainPinCoord: window.mainPin.startMainPinCoord,
-  deactivateFilters: window.filters.deactivateFilters
+  deactivateFilters: window.filters.deactivateFilters,
+  activateFilters: window.filters.activateFilters,
+  activateMainPin: window.mainPin.activateMainPin
 });

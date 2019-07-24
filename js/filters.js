@@ -40,24 +40,24 @@
     });
   };
 
-  // выбор по enter отписка (для доступности), удалять ли этот обработчик при деактивации страницы? Когда подписываться
   var housingFeaturesField = filtersForm.querySelector('#housing-features');
-  housingFeaturesField.addEventListener('keydown', function (evt) {
+  var onHousingFeaturesFieldKeydown = function (evt) {
     if (evt.keyCode === 13) {
       evt.preventDefault();
       evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
     };
-  });
-  //
+  };
 
   var deactivateFilters = function () {
     if (!filtersForm.classList.contains('ad-form--disabled')) {filtersForm.classList.add('ad-form--disabled')};
     deps.disableElements(filtersFormInputs);
     deps.disableElements(filtersFormSelects);
+    housingFeaturesField.removeEventListener('keydown', onHousingFeaturesFieldKeydown);
   };
 
   var activateFilters = function () {
     filtersForm.classList.remove('ad-form--disabled');
+    housingFeaturesField.addEventListener('keydown', onHousingFeaturesFieldKeydown);
     deps.activationElements(filtersFormInputs);
     deps.activationElements(filtersFormSelects);
   };

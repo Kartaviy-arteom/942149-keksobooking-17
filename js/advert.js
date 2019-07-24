@@ -10,12 +10,7 @@
 
   var similarListElement = document.querySelector('.map__pins');
 
-  var repeatLoad = function () {
-    load(success, deps.showErrorPopup);
-  };
-
-  var success = function (adverts) {
-    deps.activateFilters();
+  var initPins = function (adverts) {
     adverts.filter(function (advert) {
       return advert.offer;
     });
@@ -74,7 +69,7 @@
   };
 
   window.advert = {
-    success: success,
+    initPins: initPins,
   };
 
 })({
@@ -83,7 +78,6 @@
   deleteChildren: window.utils.deleteChildren,
   filterAds: window.filters.filterAds,
   renderCard: window.card.renderCard,
-  showErrorPopup: window.utils.showErrorPopup,
-  activateFilters: window.filters.activateFilters
+  showErrorPopup: window.utils.showErrorPopup
 });
 

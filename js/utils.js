@@ -102,7 +102,7 @@
     return true;
   };
 
-  var showPopup = function (similarPopup) {
+  var showPopup = function (similarPopup, callback) {
     var Popup = similarPopup.cloneNode(true);
     main.appendChild(Popup);
 
@@ -110,6 +110,7 @@
       main.removeChild(Popup);
       document.removeEventListener('keydown', onDocumentKeydown);
       document.removeEventListener('click', onDocumentClick);
+      callback();
     };
 
     var onDocumentKeydown = function (evt) {
@@ -126,8 +127,13 @@
     document.addEventListener('click', onDocumentClick);
   };
 
-  var showErrorPopup = function () {
-    showPopup(similarErrorPopup);
+  var showErrorPopup = function (onErrorPopupBtnClick) {
+    var onPopupClose = function () {
+      ErrorPopupBtn.removeEventListener('click', onErrorPopupBtnClick)
+    };
+    showPopup(similarErrorPopup, onPopupClose);
+    var ErrorPopupBtn = main.querySelector('.error__button');
+    ErrorPopupBtn.addEventListener('click', onErrorPopupBtnClick);
   };
   var showSuccessPopup = function () {
     showPopup(similarSuccessPopup);

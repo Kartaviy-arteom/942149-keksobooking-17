@@ -1,6 +1,9 @@
 'use strict';
 
 (function (deps) {
+  var KeyCode = {
+    ENTER: 13
+  };
   var GAP_PIN_Y = 53;
   var map = document.querySelector('.map');
   var mainPin = map.querySelector('.map__pin--main');
@@ -31,7 +34,7 @@
     }
   };
 
-  var initMainPinMovement = function(toggle, activationFunction, someFunction) {
+  var initMainPinMovement = function(someFunction) {
     mainPin.addEventListener('mousedown', function (evt) {
       var startСoordinates = {
         x: evt.clientX,
@@ -53,11 +56,6 @@
 
         mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
         mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
-         if (!toggle) {
-          console.log(toggle);
-          activationFunction();
-          toggle = true;
-        }
         restrictMovement();
         someFunction();
       };
@@ -71,7 +69,16 @@
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     });
+  };
 
+  var activateMainPin = function (callbackFunction) {
+    var onMainPinKeydown = function (evt) {
+      if (evt.keyCode === KeyCode.ENTER) {
+        callbackFunction();
+        mainPin.removeEventListener('keydown', onMainPinKeydown);
+      };
+    };
+    mainPin.addEventListener('keydown', onMainPinKeydown);
   };
 
   var getСurrentPinCoordinate = function () {
@@ -90,7 +97,8 @@
     startMainPinCoord: startMainPinCoord,
     initMainPinMovement: initMainPinMovement,
     getСurrentPinCoordinate: getСurrentPinCoordinate,
-    returnMainPin: returnMainPin
+    returnMainPin: returnMainPin,
+    activateMainPin: activateMainPin
   };
 })({
   measureElement: window.utils.measureElement,
