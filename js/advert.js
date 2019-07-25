@@ -22,8 +22,14 @@
 
     var addHandler = function (pinData) {
       var pins = map.querySelectorAll('.map__pin');
+      var activePin = null;
       pins.forEach(function(element) {
-        var onPinClick = function () {
+        var onPinClick = function (evt) {
+          if (activePin !== null) {
+            activePin.classList.remove('map__pin--active');
+          };
+          activePin = evt.currentTarget;
+          activePin.classList.add('map__pin--active');
           deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
 
           var card = map.querySelector('.map__card ');
@@ -38,6 +44,7 @@
           };
           var closePopup = function () {
             card.remove();
+            activePin.classList.remove('map__pin--active');
             document.removeEventListener('keydown', onDocumentEscPress);
             cardCloseButtom.removeEventListener('click', onCardCloseButtomClick);
           };
@@ -58,7 +65,7 @@
         window.clearTimeout(lastTimeout);
       }
       lastTimeout = window.setTimeout(function () {
-        deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+        deps.deleteChildren(similarListElement, 'map__pin', 'map__pin map__pin--main');
         deps.deleteChildren(similarListElement, 'map__card popup');
         var copyData = adverts.slice();
         var newData = deps.filterAds(copyData).slice(0, 5);

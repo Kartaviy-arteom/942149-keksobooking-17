@@ -56,7 +56,7 @@
     deactivatePage();
     deps.returnMainPin();
     deps.insertCoordinate(deps.startMainPinCoord);
-    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin--main');
+    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin map__pin--main');
     isActivated = false;
     var card = map.querySelector('.map__card ');
     if (card) {

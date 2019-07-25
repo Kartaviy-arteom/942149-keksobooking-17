@@ -80,7 +80,8 @@
 
   var deleteChildren = function (parentElement, childClassName, exceptionClassName) {
     Array.from(parentElement.children).forEach(function (element) {
-      if (element.className !== exceptionClassName && element.className === childClassName) {
+      console.log(element.className.toLowerCase());
+      if (element.className !== exceptionClassName && element.className.toLowerCase().includes(childClassName)) {
         element.remove();
       }
     });
