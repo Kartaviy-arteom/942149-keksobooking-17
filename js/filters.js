@@ -43,7 +43,11 @@
   var housingFeaturesField = filtersForm.querySelector('#housing-features');
   var onHousingFeaturesFieldKeydown = function (evt) {
     if (evt.keyCode === 13) {
-      Boolean(evt.target.checked) ? evt.target.checked = false : evt.target.checked = true;
+      if evt.target.checked {
+        evt.target.checked = false
+      } else {
+        evt.target.checked = true;
+      }
     }
   };
 
