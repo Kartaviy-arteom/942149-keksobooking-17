@@ -68,8 +68,8 @@
     formElement.validity.valid ? formElement.style.border = validBorderDesign : formElement.style.border = invalidBorderDesign;
   };
   var onSubmitBtnClick = function () {
-    checkValidity (titleField, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
-    checkValidity (priceHouse, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
+    checkValidity(titleField, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
+    checkValidity(priceHouse, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
   };
 
   var addValidation = function () {
@@ -98,7 +98,7 @@
     deps.disableElements([descriptionField]);
     if (!form.classList.contains('ad-form--disabled')) {
       form.classList.add('ad-form--disabled');
-    };
+    }
     removeValidation();
     featuresList.removeEventListener('keydown', onFeaturesListKeydown);
   };
@@ -118,7 +118,7 @@
     if (evt.keyCode === 13) {
       evt.preventDefault();
       evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
-    };
+    }
   };
 
   window.form = {
