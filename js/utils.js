@@ -80,7 +80,6 @@
 
   var deleteChildren = function (parentElement, childClassName, exceptionClassName) {
     Array.from(parentElement.children).forEach(function (element) {
-      console.log(element.className.toLowerCase());
       if (element.className !== exceptionClassName && element.className.toLowerCase().includes(childClassName)) {
         element.remove();
       }
@@ -113,7 +112,7 @@
       document.removeEventListener('click', onDocumentClick);
       if (callback) {
         callback();
-      };
+      }
     };
 
     var onDocumentKeydown = function (evt) {
@@ -132,7 +131,7 @@
 
   var showErrorPopup = function (onErrorPopupBtnClick) {
     var onPopupClose = function () {
-      ErrorPopupBtn.removeEventListener('click', onErrorPopupBtnClick)
+      ErrorPopupBtn.removeEventListener('click', onErrorPopupBtnClick);
     };
     showPopup(similarErrorPopup, onPopupClose);
     var ErrorPopupBtn = main.querySelector('.error__button');
