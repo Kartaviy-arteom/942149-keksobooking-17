@@ -21,10 +21,10 @@
   };
 
   var deactivatePage = function () {
-    deps.deactivateForm ();
+    deps.deactivateForm();
     if (!map.classList.contains('map--faded')) {
-      map.classList.add('map--faded')
-    };
+      map.classList.add('map--faded');
+    }
     deps.deactivateFilters();
     resetBtn.removeEventListener('click', onResetBtnClick);
     deps.activateMainPin(onMainPinMove);
@@ -62,7 +62,7 @@
     var card = map.querySelector('.map__card ');
     if (card) {
       card.remove();
-    };
+    }
   };
   var onUploadSuccess = function () {
     deps.showSuccessPopup();
