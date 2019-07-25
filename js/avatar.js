@@ -1,6 +1,6 @@
 'use strict';
 
- ;(function () {
+(function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   var fileChooser = document.querySelector('#avatar');
@@ -26,4 +26,4 @@
       reader.readAsDataURL(file);
     }
   });
- })();
+})();
