@@ -9,8 +9,6 @@
   var mainPin = map.querySelector('.map__pin--main');
   var mainPinSizes = deps.measureElement(mainPin);
   var startMainPinCoord = deps.getElementСoordinate(mainPin, mainPinSizes);
-  var resetBtn = document.querySelector('.ad-form__reset');
-  console.log(startMainPinCoord);
 
   var restrictMovement = function () {
     var rectangle = {
@@ -34,7 +32,7 @@
     }
   };
 
-  var initMainPinMovement = function(someFunction) {
+  var initMainPinMovement = function (someFunction) {
     mainPin.addEventListener('mousedown', function (evt) {
       var startСoordinates = {
         x: evt.clientX,
@@ -76,7 +74,7 @@
       if (evt.keyCode === KeyCode.ENTER) {
         callbackFunction();
         mainPin.removeEventListener('keydown', onMainPinKeydown);
-      };
+      }
     };
     mainPin.addEventListener('keydown', onMainPinKeydown);
   };
