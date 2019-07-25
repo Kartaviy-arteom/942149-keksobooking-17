@@ -44,7 +44,7 @@
   var onHousingFeaturesFieldKeydown = function (evt) {
     if (evt.keyCode === 13) {
       evt.preventDefault();
-      evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
+      (evt.target.checked) ? evt.target.checked = false : evt.target.checked = true;
     };
   };
 
