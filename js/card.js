@@ -1,65 +1,72 @@
 'use strict';
 
-(function () {
+(function (deps) {
   var similarCard = document.querySelector('#card')
     .content
     .querySelector('.map__card');
-  var map = document.querySelector('.map__pins');
+
+  var card = similarCard.cloneNode(true);
+  var similarHousePhoto = card.querySelector('.popup__photos img');
+  var cardProperties = {
+    avatar: card.querySelector('.popup__avatar'),
+    cardTitle: card.querySelector('.popup__title'),
+    address: card.querySelector('.popup__text--address'),
+    price: card.querySelector('.popup__text--price'),
+    type: card.querySelector('.popup__type'),
+    cardCapacity: card.querySelector('.popup__text--capacity'),
+    time: card.querySelector('.popup__text--time'),
+    featuresList: card.querySelector('.popup__features'),
+    description: card.querySelector('.popup__description'),
+    housePhotoList: card.querySelector('.popup__photos'),
+  };
 
   var renderCard = function (advert) {
-    var fragment = document.createDocumentFragment();
-    var card = similarCard.cloneNode(true);
-    var avatar = card.querySelector('.popup__avatar');
-    var cardTitle = card.querySelector('.popup__title');
-    var address = card.querySelector('.popup__text--address');
-    var price = card.querySelector('.popup__text--price');
-    var type = card.querySelector('.popup__type');
-    var cardCapacity = card.querySelector('.popup__text--capacity');
-    var time = card.querySelector('.popup__text--time');
-    var featuresList = card.querySelector('.popup__features');
-    var description = card.querySelector('.popup__description');
-    var similarHousePhoto = card.querySelector('.popup__photos img');
-    var housePhotoList = card.querySelector('.popup__photos');
-
     var houseToAnotherHouse = {
       'flat': 'Квартира',
       'bungalo': 'Бунгало',
       'house': 'Дом',
       'palace': 'Дворец'
     };
+    var room = (advert.offer.rooms === 1) ? ' комната для ' : ' комнаты для ';
+    var guest = (advert.offer.guests === 1) ? ' гостя' : ' гостей';
 
-    avatar.setAttribute('src', advert.author.avatar);
-    cardTitle.textContent = advert.offer.title;
-    address.textContent = advert.offer.address;
-    price.textContent = advert.offer.price + '₽/ночь';
-    type.textContent = houseToAnotherHouse[advert.offer.type];
-    cardCapacity.textContent = advert.offer.rooms + ' комнаты для ' + advert.offer.guests + ' гостей'; // если одна комната и один гость
-    time.textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
+    cardProperties.avatar.setAttribute('src', advert.author.avatar);
+    cardProperties.cardTitle.textContent = advert.offer.title;
+    cardProperties.address.textContent = advert.offer.address;
+    cardProperties.price.textContent = advert.offer.price + '₽/ночь';
+    cardProperties.type.textContent = houseToAnotherHouse[advert.offer.type];
+
+
+    cardProperties.cardCapacity.textContent = advert.offer.rooms + room + advert.offer.guests + guest;
+    cardProperties.time.textContent = 'Заезд после ' + advert.offer.checkin + ', выезд до ' + advert.offer.checkout;
 
     var offerFeatures = (advert.offer.features).map(function (element) {
       return 'popup__feature popup__feature--' + element;
     });
-    Array.from(featuresList.children).forEach(function (element) {
+    Array.from(cardProperties.featuresList.children).forEach(function (element) {
       if (offerFeatures.indexOf(element.className) === -1) {
-        element.remove();
+        element.setAttribute('style', 'display: none;');
+      } else {
+        element.removeAttribute('style', 'display: none;');
       }
     });
 
-    description.textContent = advert.offer.description;
+    cardProperties.description.textContent = advert.offer.description;
 
+    deps.deleteChildren(cardProperties.housePhotoList, 'popup__photo');
     advert.offer.photos.forEach(function (element) {
       var housePhoto = similarHousePhoto.cloneNode();
       housePhoto.setAttribute('src', element);
-      housePhotoList.appendChild(housePhoto);
+      cardProperties.housePhotoList.appendChild(housePhoto);
     });
-    housePhotoList.children[0].remove();
 
-    fragment.appendChild(card);
-    map.appendChild(fragment);
+    return card;
   };
 
   window.card = {
     renderCard: renderCard
   };
 
-})();
+})({
+  deleteChildren: window.utils.deleteChildren
+});

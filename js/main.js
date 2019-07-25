@@ -2,168 +2,109 @@
 
 (function (deps) {
   var map = document.querySelector('.map');
-
   var form = document.querySelector('.ad-form');
-  var formInputs = form.querySelectorAll('input');
-  var formSelects = form.querySelectorAll('select');
-  var mapFilters = map.querySelector('.map__filters');
-  var mapInputs = mapFilters.querySelectorAll('input');
-  var mapSelects = mapFilters.querySelectorAll('select');
-  var descriptionField = [form.querySelector('#description')];
   var buttomSubmit = form.querySelector('.ad-form__submit');
+  var similarListElement = document.querySelector('.map__pins');
+  var resetBtn = form.querySelector('.ad-form__reset');
+  var isActivated = false;
 
-  window.main = {
-    variables: {
-      form: form,
-      map: map
-    },
+  var insertCurentMainPinCoord = function () {
+    deps.insertCoordinate(deps.getСurrentPinCoordinate());
   };
 
-  var deactivateMap = function () {
-    deps.disableElements(formInputs);
-    deps.disableElements(formSelects);
-    deps.disableElements(mapInputs);
-    deps.disableElements(mapSelects);
-    deps.disableElements(descriptionField);
+  var onMainPinMove = function () {
+    if (!isActivated) {
+      activePage();
+      isActivated = true;
+    }
+    insertCurentMainPinCoord();
   };
-  deactivateMap();
 
-  var mainPin = map.querySelector('.map__pin--main');
-  var activeMap = function () {
-    deps.activationElements(formInputs);
-    deps.activationElements(formSelects);
-    deps.activationElements(mapInputs);
-    deps.activationElements(mapSelects);
-    deps.activationElements(descriptionField);
+  var deactivatePage = function () {
+    deps.deactivateForm();
+    if (!map.classList.contains('map--faded')) {
+      map.classList.add('map--faded');
+    }
+    deps.deactivateFilters();
+    resetBtn.removeEventListener('click', onResetBtnClick);
+    deps.activateMainPin(onMainPinMove);
+  };
+  deactivatePage();
+
+  var onLoadSuccess = function (data) {
+    deps.activateFilters();
+    deps.initPins(data);
+  };
+  var onLoadError = function () {
+    deps.showErrorPopup(onLoadErrorBtnClick);
+  };
+  var onLoadErrorBtnClick = function (evt) {
+    evt.preventDefault();
+    deps.load(onLoadSuccess, onLoadError);
+  };
+
+  var activePage = function () {
+    deps.activateForm();
     map.classList.remove('map--faded');
-    form.classList.remove('ad-form--disabled');
-    deps.load(deps.success, deps.error);
+    deps.load(onLoadSuccess, onLoadError);
+    resetBtn.addEventListener('click', onResetBtnClick);
   };
 
-  var mainPinSizes = deps.measureElement(mainPin);
 
-  var mainPinCoordinate = deps.getElementСoordinate(mainPin, mainPinSizes);
+  deps.initMainPinMovement(onMainPinMove);
 
-  var addressField = document.getElementById('address');
-  var insertCoordinate = function (coordinate) {
-    addressField.value = coordinate.left + ', ' + coordinate.top;
-  };
-  insertCoordinate(mainPinCoordinate);
-
-  var GAP_PIN_Y = 53;
-
-  var activated = false;
-  var restrictMovement = function () {
-    var rectangle = {
-      bottom: 630,
-      top: 130,
-      left: 0,
-      right: map.offsetWidth - mainPin.offsetWidth
-    };
-
-    if (parseInt(mainPin.style.top, 10) > rectangle.bottom) {
-      mainPin.style.top = rectangle.bottom + 'px';
-    }
-    if (parseInt(mainPin.style.top, 10) < rectangle.top) {
-      mainPin.style.top = rectangle.top + 'px';
-    }
-    if (parseInt(mainPin.style.left, 10) < rectangle.left) {
-      mainPin.style.left = rectangle.left;
-    }
-    if (parseInt(mainPin.style.left, 10) > rectangle.right) {
-      mainPin.style.left = rectangle.right + 'px';
+  var resetPage = function () {
+    deactivatePage();
+    deps.returnMainPin();
+    deps.insertCoordinate(deps.startMainPinCoord);
+    deps.deleteChildren(similarListElement, 'map__pin', 'map__pin map__pin--main');
+    isActivated = false;
+    var card = map.querySelector('.map__card ');
+    if (card) {
+      card.remove();
     }
   };
-
-  var getCoords = function () {
-    var mainActivePinCoordinate = {
-      left: Math.floor(mainPin.offsetLeft + mainPin.offsetWidth / 2),
-      top: mainPin.offsetTop + GAP_PIN_Y
-    };
-    return mainActivePinCoordinate;
+  var onUploadSuccess = function () {
+    deps.showSuccessPopup();
+    resetPage();
   };
 
-  mainPin.addEventListener('mousedown', function (evt) {
-    var startСoordinates = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
-    var onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-      if (!activated) {
-        activeMap();
-        activated = true;
-      }
-      var shift = {
-        x: startСoordinates.x - moveEvt.clientX,
-        y: startСoordinates.y - moveEvt.clientY
-      };
-
-      startСoordinates = {
-        x: moveEvt.clientX,
-        y: moveEvt.clientY
-      };
-
-      mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
-      mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
-
-      restrictMovement();
-      insertCoordinate(getCoords());
-    };
-
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      insertCoordinate(getCoords());
-    };
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-
-  });
-
-
+  var onUploadRepeatBtnClick = function (evt) {
+    evt.preventDefault();
+    deps.upload(new FormData(form), onUploadSuccess, onUploadError);
+  };
+  var onUploadError = function () {
+    deps.showErrorPopup(onUploadRepeatBtnClick);
+    buttomSubmit.removeAttribute('disabled', 'disabled');
+  };
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     buttomSubmit.setAttribute('disabled', 'disabled');
-    deps.uploadForm(new FormData(form), function () {
-      var similarSuccessPopup = document.querySelector('#success')
-      .content
-      .querySelector('.success');
-      var successPopup = similarSuccessPopup.cloneNode(true);
-      map.appendChild(successPopup);
-      var closeSuccessPopup = function () { // временный код
-        map.removeChild(successPopup);
-        document.removeEventListener('keydown', onDocumentEscPress);
-        document.removeEventListener('click', onDocumentClick);
-      };
-      var onDocumentEscPress = function (evtPress) {
-        if (evtPress.keyCode === deps.keyCode.ESC) {
-          closeSuccessPopup();
-        }
-      };
+    deps.upload(new FormData(form), onUploadSuccess, onUploadError);
 
-      var onDocumentClick = function () {
-        closeSuccessPopup();
-      };
-
-      document.addEventListener('keydown', onDocumentEscPress);
-      document.addEventListener('click', onDocumentClick);
-      buttomSubmit.removeAttribute('disabled', 'disabled');
-    });
   });
 
+  var onResetBtnClick = function (evt) {
+    evt.preventDefault();
+    resetPage();
+  };
 
 })({
-  disableElements: window.utils.disableElements,
-  activationElements: window.utils.activationElements,
-  load: window.advert.load,
-  measureElement: window.utils.measureElement,
-  getElementСoordinate: window.utils.getElementСoordinate,
-  success: window.advert.success,
+  load: window.xhrRequest.load,
+  upload: window.xhrRequest.upload,
+  initPins: window.advert.initPins,
   keyCode: window.advert.keyCode,
-  error: window.advert.error,
-  uploadForm: window.uploadForm
-
+  deleteChildren: window.utils.deleteChildren,
+  deactivateForm: window.form.deactivateForm,
+  activateForm: window.form.activateForm,
+  initMainPinMovement: window.mainPin.initMainPinMovement,
+  getСurrentPinCoordinate: window.mainPin.getСurrentPinCoordinate,
+  insertCoordinate: window.form.insertCoordinate,
+  returnMainPin: window.mainPin.returnMainPin,
+  showErrorPopup: window.utils.showErrorPopup,
+  showSuccessPopup: window.utils.showSuccessPopup,
+  startMainPinCoord: window.mainPin.startMainPinCoord,
+  deactivateFilters: window.filters.deactivateFilters,
+  activateFilters: window.filters.activateFilters,
+  activateMainPin: window.mainPin.activateMainPin
 });

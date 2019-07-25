@@ -2,6 +2,8 @@
 
 (function (deps) {
   var filtersForm = document.querySelector('.map__filters');
+  var filtersFormInputs = filtersForm.querySelectorAll('input');
+  var filtersFormSelects = filtersForm.querySelectorAll('select');
   var houseType = filtersForm.querySelector('#housing-type');
   var housingGuests = filtersForm.querySelector('#housing-guests');
   var housingRooms = filtersForm.querySelector('#housing-rooms');
@@ -38,10 +40,41 @@
     });
   };
 
+  var housingFeaturesField = filtersForm.querySelector('#housing-features');
+  var onHousingFeaturesFieldKeydown = function (evt) {
+    if (evt.keyCode === 13) {
+      if (evt.target.checked) {
+        evt.target.checked = false;
+      } else {
+        evt.target.checked = true;
+      }
+    }
+  };
+
+  var deactivateFilters = function () {
+    if (!filtersForm.classList.contains('ad-form--disabled')) {
+      filtersForm.classList.add('ad-form--disabled');
+    }
+    deps.disableElements(filtersFormInputs);
+    deps.disableElements(filtersFormSelects);
+    housingFeaturesField.removeEventListener('keydown', onHousingFeaturesFieldKeydown);
+  };
+
+  var activateFilters = function () {
+    filtersForm.classList.remove('ad-form--disabled');
+    housingFeaturesField.addEventListener('keydown', onHousingFeaturesFieldKeydown);
+    deps.activationElements(filtersFormInputs);
+    deps.activationElements(filtersFormSelects);
+  };
+
   window.filters = {
-    filterAds: filterAds
+    filterAds: filterAds,
+    deactivateFilters: deactivateFilters,
+    activateFilters: activateFilters
   };
 })({
   isItTrueChoice: window.utils.isItTrueChoice,
-  isContain: window.utils.isContain
+  isContain: window.utils.isContain,
+  disableElements: window.utils.disableElements,
+  activationElements: window.utils.activationElements
 });
