@@ -40,16 +40,6 @@
     });
   };
 
-  var housingFeaturesField = filtersForm.querySelector('#housing-features');
-  var onHousingFeaturesFieldKeydown = function (evt) {
-    if (evt.keyCode === 13) {
-      if evt.target.checked {
-        evt.target.checked = false
-      } else {
-        evt.target.checked = true;
-      }
-    }
-  };
 
   var deactivateFilters = function () {
     if (!filtersForm.classList.contains('ad-form--disabled')) {
@@ -65,6 +55,17 @@
     housingFeaturesField.addEventListener('keydown', onHousingFeaturesFieldKeydown);
     deps.activationElements(filtersFormInputs);
     deps.activationElements(filtersFormSelects);
+  };
+  
+  var housingFeaturesField = filtersForm.querySelector('#housing-features');
+  var onHousingFeaturesFieldKeydown = function (evt) {
+    if (evt.keyCode === 13) {
+      if evt.target.checked {
+        evt.target.checked = false
+      } else {
+        evt.target.checked = true;
+      }
+    }
   };
 
   window.filters = {
