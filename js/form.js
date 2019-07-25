@@ -65,7 +65,11 @@
   insertCoordinate(deps.startMainPinCoord);
 
   var checkValidity = function (formElement, validBorderDesign, invalidBorderDesign) {
-    formElement.validity.valid ? formElement.style.border = validBorderDesign : formElement.style.border = invalidBorderDesign;
+    if (formElement.validity.valid) {
+      formElement.style.border = validBorderDesign;
+    } else {
+      formElement.style.border = invalidBorderDesign;
+    }
   };
   var onSubmitBtnClick = function () {
     checkValidity(titleField, ORIGINAL_BORDER_STYLE, INVALID_BORDER_STYLE);
@@ -117,7 +121,11 @@
   var onFeaturesListKeydown = function (evt) {
     if (evt.keyCode === 13) {
       evt.preventDefault();
-      evt.target.checked ? evt.target.checked = false : evt.target.checked = true;
+      if (evt.target.checked) {
+        evt.target.checked = false;
+      } else {
+        evt.target.checked = true;
+      }
     }
   };
 
