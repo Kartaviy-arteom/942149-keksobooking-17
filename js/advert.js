@@ -6,7 +6,6 @@
     ESC: 27
   };
   var filtersForm = document.querySelector('.map__filters');
-  var main = document.querySelector('main');
 
   var similarListElement = document.querySelector('.map__pins');
 
@@ -23,11 +22,11 @@
     var addHandler = function (pinData) {
       var pins = map.querySelectorAll('.map__pin');
       var activePin = null;
-      pins.forEach(function(element) {
+      pins.forEach(function (element) {
         var onPinClick = function (evt) {
           if (activePin !== null) {
             activePin.classList.remove('map__pin--active');
-          };
+          }
           activePin = evt.currentTarget;
           activePin.classList.add('map__pin--active');
           deps.insertItems([pinData[element.id.slice(5)]], deps.renderCard, map);
