@@ -4,7 +4,6 @@
   var similarCard = document.querySelector('#card')
     .content
     .querySelector('.map__card');
-  var map = document.querySelector('.map__pins');
 
   var card = similarCard.cloneNode(true);
   var similarHousePhoto = card.querySelector('.popup__photos img');
@@ -21,10 +20,7 @@
     housePhotoList: card.querySelector('.popup__photos'),
   };
 
-
-
   var renderCard = function (advert) {
-    var fragment = document.createDocumentFragment();
     var houseToAnotherHouse = {
       'flat': 'Квартира',
       'bungalo': 'Бунгало',
@@ -52,7 +48,7 @@
         element.setAttribute('style', 'display: none;');
       } else {
         element.removeAttribute('style', 'display: none;');
-      };
+      }
     });
 
     cardProperties.description.textContent = advert.offer.description;
