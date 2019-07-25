@@ -48,7 +48,9 @@
   };
 
   var deactivateFilters = function () {
-    if (!filtersForm.classList.contains('ad-form--disabled')) {filtersForm.classList.add('ad-form--disabled')};
+    if (!filtersForm.classList.contains('ad-form--disabled')) {
+      filtersForm.classList.add('ad-form--disabled')
+    };
     deps.disableElements(filtersFormInputs);
     deps.disableElements(filtersFormSelects);
     housingFeaturesField.removeEventListener('keydown', onHousingFeaturesFieldKeydown);
