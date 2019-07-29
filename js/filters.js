@@ -1,6 +1,10 @@
 'use strict';
 
 (function (deps) {
+  var Price = {
+    MIDDLE: 10000,
+    HIGH: 50000
+  };
   var filtersForm = document.querySelector('.map__filters');
   var filtersFormInputs = filtersForm.querySelectorAll('input');
   var filtersFormSelects = filtersForm.querySelectorAll('select');
@@ -10,11 +14,11 @@
   var housingPrice = filtersForm.querySelector('#housing-price');
   var getPriceType = function (price) {
     var priceType = '';
-    if (price < 10000) {
+    if (price < Price.MIDDLE) {
       priceType = 'low';
-    } else if (price >= 10000 && price < 50000) {
+    } else if (price >= Price.MIDDLE && price < Price.HIGH) {
       priceType = 'middle';
-    } else if (price >= 50000) {
+    } else if (price >= Price.HIGH) {
       priceType = 'high';
     }
     return priceType;

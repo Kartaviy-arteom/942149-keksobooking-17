@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var SUCCESSFUL_RESPONSE = 200;
   var GetRequestParameter = {
     METHOD: 'GET',
     URL: 'https://js.dump.academy/keksobooking/data',
@@ -17,7 +18,7 @@
     xhr.addEventListener('load', function () {
 
       try {
-        if (xhr.status === 200) {
+        if (xhr.status === SUCCESSFUL_RESPONSE) {
           onSuccess(JSON.parse(xhr.responseText));
 
         } else {
