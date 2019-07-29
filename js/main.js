@@ -3,12 +3,12 @@
 (function (deps) {
   var map = document.querySelector('.map');
   var form = document.querySelector('.ad-form');
-  var buttomSubmit = form.querySelector('.ad-form__submit');
+  var buttonSubmit = form.querySelector('.ad-form__submit');
   var similarListElement = document.querySelector('.map__pins');
   var resetBtn = form.querySelector('.ad-form__reset');
   var isActivated = false;
 
-  var insertCurentMainPinCoord = function () {
+  var insertCurrentMainPinCoord = function () {
     deps.insertCoordinate(deps.getСurrentPinCoordinate());
   };
 
@@ -17,7 +17,7 @@
       activePage();
       isActivated = true;
     }
-    insertCurentMainPinCoord();
+    insertCurrentMainPinCoord();
   };
 
   var deactivatePage = function () {
@@ -75,11 +75,11 @@
   };
   var onUploadError = function () {
     deps.showErrorPopup(onUploadRepeatBtnClick);
-    buttomSubmit.removeAttribute('disabled', 'disabled');
+    buttonSubmit.removeAttribute('disabled', 'disabled');
   };
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    buttomSubmit.setAttribute('disabled', 'disabled');
+    buttonSubmit.setAttribute('disabled', 'disabled');
     deps.upload(new FormData(form), onUploadSuccess, onUploadError);
 
   });
