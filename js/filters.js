@@ -14,7 +14,7 @@
   var housingPrice = filtersForm.querySelector('#housing-price');
   var getPriceType = function (price) {
     var priceType = '';
-    switch(true) {
+    switch (true) {
       case price < Price.MIDDLE:
         priceType = 'low';
         break;
@@ -24,7 +24,7 @@
       case price >= Price.HIGH:
         priceType = 'high';
         break;
-    };
+    }
     return priceType;
   };
 
