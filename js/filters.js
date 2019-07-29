@@ -14,13 +14,17 @@
   var housingPrice = filtersForm.querySelector('#housing-price');
   var getPriceType = function (price) {
     var priceType = '';
-    if (price < Price.MIDDLE) {
-      priceType = 'low';
-    } else if (price >= Price.MIDDLE && price < Price.HIGH) {
-      priceType = 'middle';
-    } else if (price >= Price.HIGH) {
-      priceType = 'high';
-    }
+    switch(true) {
+      case price < Price.MIDDLE:
+        priceType = 'low';
+        break;
+      case price >= Price.MIDDLE && price < Price.HIGH:
+        priceType = 'middle';
+        break;
+      case price >= Price.HIGH:
+        priceType = 'high';
+        break;
+    };
     return priceType;
   };
 
