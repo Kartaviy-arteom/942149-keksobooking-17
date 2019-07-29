@@ -17,16 +17,14 @@
       .content
       .querySelector('.success');
   var chooseRandomElement = function (arr) {
-    var randomElement = arr[Math.floor(Math.random() * arr.length)];
-    return randomElement;
+    return arr[Math.floor(Math.random() * arr.length)];
   };
 
   var measureElement = function (element) {
-    var elementSizes = {
+    return {
       x: element.offsetWidth,
       y: element.offsetHeight
     };
-    return elementSizes;
   };
 
   var insertItems = function (items, renderItem, target) {
@@ -50,11 +48,10 @@
   };
 
   var getElementСoordinate = function (element, elementSizes) {
-    var coordinate = {
+    return {
       left: Math.floor(element.offsetLeft + elementSizes.x / 2),
       top: Math.floor(element.offsetTop + elementSizes.y / 2)
     };
-    return coordinate;
   };
 
   var renderPin = function (pinData, index) {

@@ -80,11 +80,10 @@
   };
 
   var getСurrentPinCoordinate = function () {
-    var mainСurrentPinCoordinate = {
+    return {
       left: Math.floor(mainPin.offsetLeft + mainPin.offsetWidth / 2),
       top: mainPin.offsetTop + GAP_PIN_Y
     };
-    return mainСurrentPinCoordinate;
   };
 
   var returnMainPin = function () {

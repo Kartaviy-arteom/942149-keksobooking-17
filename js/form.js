@@ -121,11 +121,7 @@
   var onFeaturesListKeydown = function (evt) {
     if (evt.keyCode === 13) {
       evt.preventDefault();
-      if (evt.target.checked) {
-        evt.target.checked = false;
-      } else {
-        evt.target.checked = true;
-      }
+      evt.target.checked = !evt.target.checked;
     }
   };
 
