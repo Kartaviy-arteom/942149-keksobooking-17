@@ -9,20 +9,20 @@
   var photoPreviewContainer = document.querySelector('.ad-form__photo');
   var photoChooser = document.querySelector('#images');
 
-  var getAvatarPreviews = function () {
-    return [preview, mainPinPreview];
-  };
+  var avatarPreviews = [preview, mainPinPreview];
 
-  var createImage = function() {
-    var newImage = document.createElement("img");
-    newImage.setAttribute('width', '70');
-    newImage.setAttribute('height', '70');
 
+  var newImage = document.createElement("img");
+  newImage.setAttribute('width', '70');
+  newImage.setAttribute('height', '70');
+
+  var insertImage = function () {
     photoPreviewContainer.appendChild(newImage);
-    return [newImage];
   };
 
-  var addPreview = function(fileChooser, callback) {
+  var advertPhotoPreviews = [newImage];
+
+  var addPreview = function(fileChooser, previews) {
     fileChooser.addEventListener('change', function () {
       var file = fileChooser.files[0];
       var fileName = file.name.toLowerCase();
@@ -35,7 +35,6 @@
         var reader = new FileReader();
 
         reader.addEventListener('load', function () {
-          var previews = callback ();
           previews.forEach(function(element) {
             element.src = reader.result;
           });
@@ -46,6 +45,10 @@
     });
   };
 
-  addPreview(avatarFileChooser, getAvatarPreviews);
-  addPreview(photoChooser, createImage);
+  photoChooser.addEventListener('change', function () {
+    insertImage();
+  });
+
+  addPreview(avatarFileChooser, avatarPreviews);
+  addPreview(photoChooser, advertPhotoPreviews);
 })();
