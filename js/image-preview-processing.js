@@ -33,13 +33,12 @@
 
       if (matches) {
         var reader = new FileReader();
-
-        reader.addEventListener('load', function () {
+        var onReaderLoad = function () {
           previews.forEach(function (element) {
             element.src = reader.result;
           });
-        });
-
+        };
+        reader.addEventListener('load', onReaderLoad);
         reader.readAsDataURL(file);
       }
     });
