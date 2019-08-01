@@ -3,8 +3,8 @@
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
   var SrcDefaultValue = {
-    preview: "img/muffin-grey.svg",
-    mainPinPreview: "img/muffin-red.svg"
+    preview: 'img/muffin-grey.svg',
+    mainPinPreview: 'img/muffin-red.svg'
   };
 
   var avatarFileChooser = document.querySelector('#avatar');
@@ -16,13 +16,13 @@
   var avatarPreviews = [preview, mainPinPreview];
 
 
-  var newImage = document.createElement("img");
+  var newImage = document.createElement('img');
   newImage.setAttribute('width', '70');
   newImage.setAttribute('height', '70');
 
   var advertPhotoPreviews = [newImage];
 
-  var addPreview = function(fileChooser, previews) {
+  var addPreview = function (fileChooser, previews) {
     fileChooser.addEventListener('change', function () {
       var file = fileChooser.files[0];
       var fileName = file.name.toLowerCase();
@@ -35,7 +35,7 @@
         var reader = new FileReader();
 
         reader.addEventListener('load', function () {
-          previews.forEach(function(element) {
+          previews.forEach(function (element) {
             element.src = reader.result;
           });
         });
@@ -60,5 +60,5 @@
 
   window.imagePreviewProcessing = {
     cleanPreviews: cleanPreviews
-  }
+  };
 })();
