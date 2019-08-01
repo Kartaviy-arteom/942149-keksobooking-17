@@ -56,6 +56,7 @@
   var resetPage = function () {
     deactivatePage();
     deps.returnMainPin();
+    deps.cleanPreviews();
     deps.insertCoordinate(deps.startMainPinCoord);
     deps.deleteChildren(similarListElement, 'map__pin', 'map__pin map__pin--main');
     isActivated = false;
@@ -106,5 +107,6 @@
   startMainPinCoord: window.mainPin.startMainPinCoord,
   deactivateFilters: window.filters.deactivateFilters,
   activateFilters: window.filters.activateFilters,
-  activateMainPin: window.mainPin.activateMainPin
+  activateMainPin: window.mainPin.activateMainPin,
+  cleanPreviews: window.imagePreviewProcessing.cleanPreviews
 });
